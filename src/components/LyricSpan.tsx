@@ -5,18 +5,17 @@ import React from 'react';
 import { TooltipWrapper } from './TooltipWrapper';
 
 const spanStyle = {
-  color: 'white',
-  backgroundColor: 'gray',
-  borderRadius: '4px',
-  padding: '0 4px',
-  marginRight: '4px',
+  color: 'black',
+  textDecoration: 'underline',
+  fontWeight: 600,
+  cursor: 'pointer',
 };
 
 export const LyricSpan = ({ lyric }: { lyric: Lyric }) => {
   return (
     <>
       <TooltipWrapper lyric={lyric}>
-        <span style={spanStyle}>{lyric.word}</span>
+        <span style={spanStyle}>{lyric.word}</span>&nbsp;
       </TooltipWrapper>
       {lyric.newLine && <br />}
     </>
