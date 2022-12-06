@@ -1,3 +1,9 @@
 body {
   margin: 0;
+  font-family: 'Helvetica Neue';
+}
+
+.JoyTextarea-startDecorator {
+  position: absolute !important;
+  padding-left: 6px !important;
 }
