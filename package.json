@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/lodash": "^4.14.191",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "css-loader": "^6.7.2",
@@ -23,6 +25,10 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "@mui/joy": "^5.0.0-alpha.56",
+    "@mui/material": "^5.10.16",
+    "axios": "^1.2.1",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
