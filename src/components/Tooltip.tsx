@@ -1,7 +1,8 @@
 import type { Lyric } from '../Types';
 
 import React, { useState } from 'react';
-import { Box, Select, MenuItem, Button } from '@mui/material';
+import { isEmpty } from 'lodash';
+import { Box, Typography, Select, MenuItem, Button } from '@mui/material';
 
 import { fetchWordData } from '../utils/fetchWordData';
 
@@ -18,21 +19,34 @@ const tooltipSx = {
   zIndex: 1000,
   backgroundColor: 'lightgray',
   borderRadius: '8px',
+  boxShadow: 2,
+  p: 1,
+};
+
+const resultsSx = {
+  backgroundColor: 'white',
+  borderRadius: '4px',
   p: 1,
 };
 
 const wordDataSx = {
   maxHeight: '160px',
   overflowY: 'auto',
-  backgroundColor: 'white',
-  borderRadius: '4px',
-  p: 1,
+};
+
+const noWordDataSx = {
+  height: '96px',
+  textAlign: 'center',
+  pt: 2,
 };
 
 export const Tooltip = ({ lyric }: { lyric: Lyric }) => {
   const [wordData, setWordData] = useState<WordData[]>([]);
   const [dataType, setDataType] = useState(DataType.RHYMES);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const hasWords = !isEmpty(wordData);
+  const noWordsString = dataType === DataType.RELATED ? `${dataType} words` : dataType;
 
   const handleSelectChange = (event: any) => {
     console.log(event.target.value);
@@ -46,7 +60,7 @@ export const Tooltip = ({ lyric }: { lyric: Lyric }) => {
   };
 
   return (
-    <div className="custom-tooltip" contentEditable="false">
+    <div contentEditable="false">
       <Box sx={tooltipSx}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box mr={1}>
@@ -72,16 +86,26 @@ export const Tooltip = ({ lyric }: { lyric: Lyric }) => {
         </Box>
         {isLoaded && (
           <Box sx={{ height: '100%', pt: 1 }}>
-            <Box sx={wordDataSx}>
-              {wordData.map((data, index) => {
-                const isLastWord = index === wordData.length - 1 ? true : false;
-                return (
-                  <span>
-                    {data.word}
-                    {isLastWord ? '' : ', '}
-                  </span>
-                );
-              })}
+            <Box sx={resultsSx}>
+              {hasWords ? (
+                <Box sx={wordDataSx}>
+                  {wordData.map((data, index) => {
+                    const isLastWord = index === wordData.length - 1 ? true : false;
+                    return (
+                      <span>
+                        {data.word}
+                        {isLastWord ? '' : ', '}
+                      </span>
+                    );
+                  })}
+                </Box>
+              ) : (
+                <Box sx={noWordDataSx}>
+                  <Typography variant="subtitle1">
+                    No {noWordsString} found for {lyric.word}.
+                  </Typography>
+                </Box>
+              )}
             </Box>
           </Box>
         )}
