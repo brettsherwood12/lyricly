@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { DataType } from '../Types';
+import { DataType } from '../Constants';
 
 const baseUrl = 'https://api.datamuse.com';
 

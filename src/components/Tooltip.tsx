@@ -6,7 +6,7 @@ import { Box, Typography, Select, MenuItem, Button } from '@mui/material';
 
 import { fetchWordData } from '../utils/fetchWordData';
 
-import { DataType } from '../Types';
+import { DataType } from '../Constants';
 
 interface WordData {
   word: string;
