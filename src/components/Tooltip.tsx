@@ -40,7 +40,7 @@ const noWordDataSx = {
   pt: 2,
 };
 
-export const Tooltip = ({ lyric }: { lyric: Lyric }) => {
+export const Tooltip = ({ word }: { word: string }) => {
   const [wordData, setWordData] = useState<WordData[]>([]);
   const [dataType, setDataType] = useState(DataType.RHYMES);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -49,12 +49,11 @@ export const Tooltip = ({ lyric }: { lyric: Lyric }) => {
   const noWordsString = dataType === DataType.RELATED ? `${dataType} words` : dataType;
 
   const handleSelectChange = (event: any) => {
-    console.log(event.target.value);
     setDataType(event.target.value);
   };
 
   const handleButtonClick = async () => {
-    const data = await fetchWordData(lyric.word, dataType);
+    const data = await fetchWordData(word, dataType);
     setIsLoaded(true);
     setWordData(data);
   };
@@ -102,7 +101,7 @@ export const Tooltip = ({ lyric }: { lyric: Lyric }) => {
               ) : (
                 <Box sx={noWordDataSx}>
                   <Typography variant="subtitle1">
-                    No {noWordsString} found for {lyric.word}.
+                    No {noWordsString} found for {word}.
                   </Typography>
                 </Box>
               )}
