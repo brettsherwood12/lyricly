@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
-import { LyricsTextarea } from './components/LyricsTextarea';
+import { TextEditor } from './components/TextEditor';
 
 function App() {
   return (
@@ -12,8 +12,8 @@ function App() {
           lyric.ly
         </Typography>
       </Box>
-      <Box sx={{ width: '768px', height: 'calc(100% - 96px)' }}>
-        <LyricsTextarea />
+      <Box sx={{ width: '768px', height: 'calc(100% - 128px)' }}>
+        <TextEditor />
       </Box>
     </Box>
   );
