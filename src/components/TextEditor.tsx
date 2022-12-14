@@ -32,6 +32,8 @@ const boxSx = {
   padding: '8px',
 };
 
+const PLACEHOLDER_TEXT = 'Type or paste lyrics here...';
+
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
@@ -39,7 +41,11 @@ const initialValue: Descendant[] = [
   },
 ];
 
-export const TextEditor = () => {
+interface Props {
+  setSelectedWord: (word: string) => void;
+}
+
+export const TextEditor = ({ setSelectedWord }: Props) => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [editorValue, setEditorValue] = useState(initialValue);
@@ -69,7 +75,11 @@ export const TextEditor = () => {
   return (
     <Box sx={boxSx}>
       <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
-        <Editable renderElement={renderElement} onKeyDown={handleKeyDown} />
+        <Editable
+          placeholder={PLACEHOLDER_TEXT}
+          renderElement={renderElement}
+          onKeyDown={handleKeyDown}
+        />
       </Slate>
     </Box>
   );

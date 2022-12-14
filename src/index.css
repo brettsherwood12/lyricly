@@ -4,7 +4,6 @@ body {
   color: 'darkgray';
 }
 
-.JoyTextarea-startDecorator {
-  position: absolute !important;
-  padding-left: 6px !important;
+div[role='textbox'] {
+  height: 100%;
 }
