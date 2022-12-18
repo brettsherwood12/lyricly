@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { Box } from '@mui/material';
-import { createEditor, Editor, Transforms } from 'slate';
+import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { Lyric } from './Lyric';
@@ -41,11 +41,7 @@ const initialValue: Descendant[] = [
   },
 ];
 
-interface Props {
-  setSelectedWord: (word: string) => void;
-}
-
-export const TextEditor = ({ setSelectedWord }: Props) => {
+export const TextEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [editorValue, setEditorValue] = useState(initialValue);
