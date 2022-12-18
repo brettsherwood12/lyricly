@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 import { TextEditor } from './components/TextEditor';
-// import { WordMatches } from './components/WordMatches';
+// import { Results } from './components/Results';
 
 function App() {
   const [selectedWord, setSelectedWord] = useState('');
@@ -19,7 +19,7 @@ function App() {
         <Box sx={{ minHeight: '36px' }}>
           <Typography variant="h5">{selectedWord}</Typography>
         </Box>
-        {/* <WordMatches words={} /> */}
+        {/* <Results /> */}
       </Box>
     </Box>
   );

@@ -11,7 +11,7 @@ const divSx = {
   textDecoration: 'underline',
 };
 
-export const Word = (props: RenderElementProps) => {
+export const Lyric = (props: RenderElementProps) => {
   const word = props.children[0].props.text.text;
 
   const [isTooltipActive, setIsTooltipActive] = useState(false);

@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { createEditor, Editor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
-import { Word } from './Word';
+import { Lyric } from './Lyric';
 
 import type { BaseEditor, Descendant, Element } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
@@ -52,7 +52,7 @@ export const TextEditor = ({ setSelectedWord }: Props) => {
 
   const renderElement = useCallback((props: RenderElementPropsWithCustomProperty) => {
     if (props.element.isWord) {
-      return <Word {...props} />;
+      return <Lyric {...props} />;
     } else {
       return <span {...props.attributes}>{props.children}</span>;
     }

@@ -12,7 +12,7 @@ interface Props {
   words: string[];
 }
 
-export const WordMatches = ({ words }: Props) => {
+export const Results = ({ words }: Props) => {
   return (
     <Box sx={boxSx}>
       {words.map((word) => (
