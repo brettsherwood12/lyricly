@@ -10,7 +10,7 @@ const typeToQueryMap = {
   [DataType.RELATED]: 'ml',
 };
 
-export const fetchWordData = async (word: string, type: DataType) => {
+export const fetchData = async (word: string, type: DataType) => {
   const queryParam = typeToQueryMap[type];
   const requestUrl = `${baseUrl}/words?${queryParam}=${word}`;
   const response = await axios.get(requestUrl);
