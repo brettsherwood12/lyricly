@@ -4,7 +4,7 @@ import { Context } from '../App';
 import { fetchData } from '../utils/fetchData';
 
 import type { RenderElementProps } from 'slate-react';
-import { DataType } from '../Constants';
+import { DataType, dataTypes } from '../Constants';
 
 const spanStyle = {
   display: 'inline-block',
@@ -23,22 +23,24 @@ const selectedSpanStyle = {
 export const Lyric = (props: RenderElementProps) => {
   const lyric = props.element.children[0].text;
 
-  const { selectedLyric, setSelectedLyric, dataType, setRhymes, setSynonyms, setRelatedWords } =
+  const { selectedLyric, setSelectedLyric, setRhymes, setSynonyms, setRelatedWords } =
     useContext(Context);
 
   const [isSelected, setIsSelected] = useState(false);
 
-  const handleClick = async () => {
+  const handleClick = () => {
     setSelectedLyric(lyric);
-    const data = await fetchData(lyric, dataType);
-    const stringArray = data.map((datum: any) => datum.word);
-    if (dataType === DataType.RHYMES) {
-      setRhymes(stringArray);
-    } else if (dataType === DataType.SYNONYMS) {
-      setSynonyms(stringArray);
-    } else if (dataType === DataType.RELATED) {
-      setRelatedWords(stringArray);
-    }
+    dataTypes.forEach(async (dataType) => {
+      const { data } = await fetchData(lyric, dataType);
+      const formattedData = data.map((datum: any) => datum.word);
+      if (dataType === DataType.RHYMES) {
+        setRhymes(formattedData);
+      } else if (dataType === DataType.SYNONYMS) {
+        setSynonyms(formattedData);
+      } else if (dataType === DataType.RELATED_WORDS) {
+        setRelatedWords(formattedData);
+      }
+    });
   };
 
   useEffect(() => {

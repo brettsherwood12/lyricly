@@ -5,8 +5,8 @@ import { DataType } from './Constants';
 export type ContextValue = {
   selectedLyric: string;
   setSelectedLyric: Dispatch<string>;
-  dataType: DataType;
-  setDataType: Dispatch<DataType>;
+  selectedDataType: DataType;
+  setSelectedDataType: Dispatch<DataType>;
   rhymes: string[];
   setRhymes: Dispatch<string[]>;
   synonyms: string[];
@@ -15,7 +15,13 @@ export type ContextValue = {
   setRelatedWords: Dispatch<string[]>;
 };
 
-export interface Lyric {
+type DataPoint = {
   word: string;
-  newLine: boolean;
-}
+  score: number;
+  numSyllables?: number; // for rhymes
+  tags?: string[]; // for related words
+};
+
+export type Response = {
+  data: DataPoint[];
+};

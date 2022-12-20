@@ -11,8 +11,8 @@ import type { ContextValue } from './Types';
 const initialContextValue: ContextValue = {
   selectedLyric: '',
   setSelectedLyric: () => {},
-  dataType: '' as DataType,
-  setDataType: () => {},
+  selectedDataType: '' as DataType,
+  setSelectedDataType: () => {},
   rhymes: [],
   setRhymes: () => {},
   synonyms: [],
@@ -25,7 +25,7 @@ export const Context = createContext<ContextValue>(initialContextValue);
 
 function App() {
   const [selectedLyric, setSelectedLyric] = useState<string>('');
-  const [dataType, setDataType] = useState<DataType>(DataType.RHYMES);
+  const [selectedDataType, setSelectedDataType] = useState<DataType>(DataType.RHYMES);
   const [rhymes, setRhymes] = useState<string[]>([]);
   const [synonyms, setSynonyms] = useState<string[]>([]);
   const [relatedWords, setRelatedWords] = useState<string[]>([]);
@@ -33,8 +33,8 @@ function App() {
   const contextValue = {
     selectedLyric,
     setSelectedLyric,
-    dataType,
-    setDataType,
+    selectedDataType,
+    setSelectedDataType,
     rhymes,
     setRhymes,
     synonyms,

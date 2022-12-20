@@ -19,18 +19,18 @@ const tabsSx = {
 };
 
 export const Results = () => {
-  const { setDataType, rhymes, synonyms, relatedWords } = useContext(Context);
+  const { setSelectedDataType, rhymes, synonyms, relatedWords } = useContext(Context);
 
   const [value, setValue] = useState(0);
 
   const handleChange = (_event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
     if (newValue === 0) {
-      setDataType(DataType.RHYMES);
+      setSelectedDataType(DataType.RHYMES);
     } else if (newValue === 1) {
-      setDataType(DataType.SYNONYMS);
+      setSelectedDataType(DataType.SYNONYMS);
     } else if (newValue === 2) {
-      setDataType(DataType.RELATED);
+      setSelectedDataType(DataType.RELATED_WORDS);
     }
   };
 
