@@ -6,7 +6,7 @@ import { Results } from './components/Results';
 
 import { DataType } from './Constants';
 
-import type { ContextValue } from './Types';
+import type { ContextValue, DataPoint } from './Types';
 
 const initialContextValue: ContextValue = {
   selectedLyric: '',
@@ -26,9 +26,9 @@ export const Context = createContext<ContextValue>(initialContextValue);
 function App() {
   const [selectedLyric, setSelectedLyric] = useState<string>('');
   const [selectedDataType, setSelectedDataType] = useState<DataType>(DataType.RHYMES);
-  const [rhymes, setRhymes] = useState<string[]>([]);
-  const [synonyms, setSynonyms] = useState<string[]>([]);
-  const [relatedWords, setRelatedWords] = useState<string[]>([]);
+  const [rhymes, setRhymes] = useState<DataPoint[]>([]);
+  const [synonyms, setSynonyms] = useState<DataPoint[]>([]);
+  const [relatedWords, setRelatedWords] = useState<DataPoint[]>([]);
 
   const contextValue = {
     selectedLyric,
@@ -55,7 +55,7 @@ function App() {
         <Divider orientation="vertical" flexItem={true} />
         <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
           <Box sx={{ minHeight: '36px' }}>
-            <Typography variant="h5">{selectedLyric}</Typography>
+            {selectedLyric && <Typography variant="h5">'{selectedLyric}'</Typography>}
           </Box>
           <Results />
         </Box>

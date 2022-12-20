@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Typography, Tabs, Tab } from '@mui/material';
+import { Tabs, Tab } from '@mui/material';
 import { Box } from '@mui/material';
 
 import { Context } from '../App';
@@ -38,17 +38,17 @@ export const Results = () => {
       </Tabs>
       <TabPanel value={value} index={0}>
         {rhymes.map((rhyme) => (
-          <span>{rhyme} </span>
+          <span>{rhyme.word} </span>
         ))}
       </TabPanel>
       <TabPanel value={value} index={1}>
         {synonyms.map((synonym) => (
-          <span>{synonym} </span>
+          <span>{synonym.word} </span>
         ))}
       </TabPanel>
       <TabPanel value={value} index={2}>
         {relatedWords.map((relatedWord) => (
-          <span>{relatedWord} </span>
+          <span>{relatedWord.word} </span>
         ))}
       </TabPanel>
     </Box>

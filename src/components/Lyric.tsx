@@ -3,8 +3,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../App';
 import { fetchData } from '../utils/fetchData';
 
-import type { RenderElementProps } from 'slate-react';
 import { DataType, dataTypes } from '../Constants';
+
+import type { RenderElementProps } from 'slate-react';
 
 const spanStyle = {
   display: 'inline-block',
@@ -32,13 +33,13 @@ export const Lyric = (props: RenderElementProps) => {
     setSelectedLyric(lyric);
     dataTypes.forEach(async (dataType) => {
       const { data } = await fetchData(lyric, dataType);
-      const formattedData = data.map((datum: any) => datum.word);
+
       if (dataType === DataType.RHYMES) {
-        setRhymes(formattedData);
+        setRhymes(data);
       } else if (dataType === DataType.SYNONYMS) {
-        setSynonyms(formattedData);
+        setSynonyms(data);
       } else if (dataType === DataType.RELATED_WORDS) {
-        setRelatedWords(formattedData);
+        setRelatedWords(data);
       }
     });
   };

@@ -2,20 +2,7 @@ import type { Dispatch } from 'react';
 
 import { DataType } from './Constants';
 
-export type ContextValue = {
-  selectedLyric: string;
-  setSelectedLyric: Dispatch<string>;
-  selectedDataType: DataType;
-  setSelectedDataType: Dispatch<DataType>;
-  rhymes: string[];
-  setRhymes: Dispatch<string[]>;
-  synonyms: string[];
-  setSynonyms: Dispatch<string[]>;
-  relatedWords: string[];
-  setRelatedWords: Dispatch<string[]>;
-};
-
-type DataPoint = {
+export type DataPoint = {
   word: string;
   score: number;
   numSyllables?: number; // for rhymes
@@ -24,4 +11,17 @@ type DataPoint = {
 
 export type Response = {
   data: DataPoint[];
+};
+
+export type ContextValue = {
+  selectedLyric: string;
+  setSelectedLyric: Dispatch<string>;
+  selectedDataType: DataType;
+  setSelectedDataType: Dispatch<DataType>;
+  rhymes: DataPoint[];
+  setRhymes: Dispatch<DataPoint[]>;
+  synonyms: DataPoint[];
+  setSynonyms: Dispatch<DataPoint[]>;
+  relatedWords: DataPoint[];
+  setRelatedWords: Dispatch<DataPoint[]>;
 };
