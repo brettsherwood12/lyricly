@@ -1,5 +1,5 @@
-import React, { useContext, useState, createContext } from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { useState, createContext } from 'react';
+import { Box, Typography, Divider } from '@mui/material';
 
 import { TextEditor } from './components/TextEditor';
 import { Results } from './components/Results';
@@ -44,22 +44,23 @@ function App() {
   };
 
   return (
-    <Box sx={{ height: '100vh', display: 'flex', gap: '16px', p: 2 }}>
-      <Context.Provider value={contextValue}>
+    <Context.Provider value={contextValue}>
+      <Box sx={{ height: '100vh', display: 'flex', gap: '16px', p: 2 }}>
         <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
           <Box sx={{ minHeight: '36px' }}>
             <Typography variant="h5">lyric.ly</Typography>
           </Box>
           <TextEditor />
         </Box>
+        <Divider orientation="vertical" flexItem={true} />
         <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
           <Box sx={{ minHeight: '36px' }}>
             <Typography variant="h5">{selectedLyric}</Typography>
           </Box>
           <Results />
         </Box>
-      </Context.Provider>
-    </Box>
+      </Box>
+    </Context.Provider>
   );
 }
 

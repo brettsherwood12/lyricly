@@ -9,13 +9,8 @@ import type { SyntheticEvent } from 'react';
 import { DataType } from '../Constants';
 
 const boxSx = {
-  // height: '100%',
-};
-
-const tabsSx = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  px: 4,
+  height: '100%',
+  // backgroundColor: 'lightgray',
 };
 
 export const Results = () => {

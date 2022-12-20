@@ -27,9 +27,8 @@ declare module 'slate' {
 
 const boxSx = {
   height: '100%',
-  border: '1px solid darkgray',
-  borderRadius: '8px',
-  padding: '8px',
+  // backgroundColor: 'lightgray',
+  pt: 2,
 };
 
 const PLACEHOLDER_TEXT = 'Type or paste lyrics here...';
