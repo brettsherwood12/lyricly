@@ -5,6 +5,7 @@ import { Slate, Editable, withReact } from 'slate-react';
 
 import { Lyric } from './Lyric';
 
+import type { KeyboardEvent, ClipboardEvent } from 'react';
 import type { BaseEditor, Descendant, Element } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
 
@@ -13,7 +14,7 @@ type CustomText = { text: string };
 
 type RenderElementPropsWithCustomProperty = RenderElementProps & {
   element: Element & {
-    isWord?: boolean;
+    isLyric?: boolean;
   };
 };
 
@@ -46,25 +47,33 @@ export const TextEditor = () => {
   const [editorValue, setEditorValue] = useState(initialValue);
 
   const renderElement = useCallback((props: RenderElementPropsWithCustomProperty) => {
-    if (props.element.isWord) {
+    if (props.element.isLyric) {
       return <Lyric {...props} />;
     } else {
       return <span {...props.attributes}>{props.children}</span>;
     }
   }, []);
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     const isSpaceKey = event.key === ' ';
     const isEnterKey = event.key === 'Enter';
     if (isSpaceKey || isEnterKey) {
       event.preventDefault();
       //@ts-ignore
-      Transforms.setNodes(editor, { isWord: true });
-      const newText = isEnterKey ? '\n' : ' ';
-      const newNode = { type: 'span', children: [{ text: newText }] };
+      Transforms.setNodes(editor, { isLyric: true });
+      const whitespace = isEnterKey ? '\n' : ' ';
+      const whitespaceNode = { type: 'span', children: [{ text: whitespace }] };
+      const nextLyricNode = { type: 'span', children: [{ text: '' }] };
+      const nodes = [whitespaceNode, nextLyricNode];
       //@ts-ignore
-      Transforms.insertNodes(editor, newNode);
+      Transforms.insertNodes(editor, nodes);
     }
+  };
+
+  const handlePaste = (event: ClipboardEvent) => {
+    event.preventDefault();
+    const pasteText = event.clipboardData.getData('text/plain');
+    console.log(pasteText);
   };
 
   return (
@@ -74,6 +83,7 @@ export const TextEditor = () => {
           placeholder={PLACEHOLDER_TEXT}
           renderElement={renderElement}
           onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
         />
       </Slate>
     </Box>
