@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
-import { Lyric } from './Lyric';
+import { LyricSpan } from './LyricSpan';
 
 import { Key } from '../Constants';
 
@@ -49,7 +49,7 @@ export const TextEditor = () => {
 
   const renderElement = useCallback((props: RenderElementPropsWithCustomProperty) => {
     if (props.element.isLyric) {
-      return <Lyric {...props} />;
+      return <LyricSpan {...props} />;
     } else {
       return <span {...props.attributes}>{props.children}</span>;
     }

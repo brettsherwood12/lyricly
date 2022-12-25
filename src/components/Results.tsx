@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 
 import { Context } from '../App';
 import { TabPanel } from './TabPanel';
+import { ResultSpan } from './ResultSpan';
 
 import type { SyntheticEvent } from 'react';
 import { DataType } from '../Constants';
@@ -38,7 +39,7 @@ export const Results = () => {
       </Tabs>
       <TabPanel value={value} index={0}>
         {rhymes.map((rhyme) => (
-          <span>{rhyme.word} </span>
+          <ResultSpan result={rhyme} />
         ))}
       </TabPanel>
       <TabPanel value={value} index={1}>

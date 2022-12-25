@@ -23,8 +23,8 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-export const Lyric = (props: RenderElementProps) => {
-  const lyric = props.element.children[0].text.replace(/\W/g, ''); // remove non-alphabetic chars
+export const LyricSpan = (props: RenderElementProps) => {
+  const lyric = props.element.children[0].text.replace(/\W/g, '').toLowerCase(); // remove non-alphabetic chars
 
   const { selectedLyric, setSelectedLyric, setRhymes, setSynonyms, setRelatedWords } =
     useContext(Context);
