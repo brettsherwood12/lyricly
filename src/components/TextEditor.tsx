@@ -5,12 +5,14 @@ import { Slate, Editable, withReact } from 'slate-react';
 
 import { Lyric } from './Lyric';
 
+import { Key } from '../Constants';
+
 import type { KeyboardEvent, ClipboardEvent } from 'react';
 import type { BaseEditor, Descendant, Element } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
 
-type CustomElement = { type: 'paragraph'; children: CustomText[] };
 type CustomText = { text: string };
+type CustomElement = { type: string; children: CustomText[] };
 
 type RenderElementPropsWithCustomProperty = RenderElementProps & {
   element: Element & {
@@ -28,7 +30,6 @@ declare module 'slate' {
 
 const boxSx = {
   height: '100%',
-  // backgroundColor: 'lightgray',
   pt: 2,
 };
 
@@ -55,25 +56,50 @@ export const TextEditor = () => {
   }, []);
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    const isSpaceKey = event.key === ' ';
-    const isEnterKey = event.key === 'Enter';
+    const { key } = event;
+
+    const isSpaceKey = key === Key.SPACE;
+    const isEnterKey = key === Key.ENTER;
+    const isDeleteKey = key === Key.DELETE;
+    const isBackspaceKey = key === Key.BACKSPACE;
+
     if (isSpaceKey || isEnterKey) {
       event.preventDefault();
       //@ts-ignore
       Transforms.setNodes(editor, { isLyric: true });
+
       const whitespace = isEnterKey ? '\n' : ' ';
+
       const whitespaceNode = { type: 'span', children: [{ text: whitespace }] };
       const nextLyricNode = { type: 'span', children: [{ text: '' }] };
       const nodes = [whitespaceNode, nextLyricNode];
-      //@ts-ignore
+
       Transforms.insertNodes(editor, nodes);
+    } else if (isDeleteKey || isBackspaceKey) {
+      console.log(event);
     }
   };
 
   const handlePaste = (event: ClipboardEvent) => {
     event.preventDefault();
+
     const pasteText = event.clipboardData.getData('text/plain');
-    console.log(pasteText);
+    const lines = pasteText.split('\n');
+
+    let nodes: Descendant[] = [];
+
+    lines.forEach((line) => {
+      const lyrics = line.split(' ');
+      lyrics.forEach((lyric) => {
+        const whitespaceNode = { type: 'span', children: [{ text: ' ' }] };
+        const lyricNode = { type: 'span', children: [{ text: lyric }], isLyric: true };
+
+        nodes.push(lyricNode);
+        nodes.push(whitespaceNode);
+      });
+    });
+
+    Transforms.insertNodes(editor, nodes);
   };
 
   return (

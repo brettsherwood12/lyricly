@@ -1,3 +1,10 @@
+export enum Key {
+  SPACE = ' ',
+  ENTER = 'Enter',
+  DELETE = 'Delete',
+  BACKSPACE = 'Backspace',
+}
+
 export enum DataType {
   RHYMES = 'rhymes',
   SYNONYMS = 'synonyms',
