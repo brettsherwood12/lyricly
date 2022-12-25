@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react';
 import { Box, Typography, Divider } from '@mui/material';
 
-import { TextEditor } from './components/TextEditor';
+import { Editor } from './components/Editor';
 import { Results } from './components/Results';
 
 import { DataType } from './Constants';
@@ -50,7 +50,7 @@ function App() {
           <Box sx={{ minHeight: '36px' }}>
             <Typography variant="h5">lyric.ly</Typography>
           </Box>
-          <TextEditor />
+          <Editor />
         </Box>
         <Divider orientation="vertical" flexItem={true} />
         <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>

@@ -42,7 +42,7 @@ const initialValue: Descendant[] = [
   },
 ];
 
-export const TextEditor = () => {
+export const Editor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [editorValue, setEditorValue] = useState(initialValue);
