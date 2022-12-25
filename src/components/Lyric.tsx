@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { makeStyles, createStyles } from '@mui/styles';
 
 import { Context } from '../App';
 import { fetchData } from '../utils/fetchData';
@@ -7,30 +8,36 @@ import { DataType, dataTypes } from '../Constants';
 
 import type { RenderElementProps } from 'slate-react';
 
-const spanStyle = {
-  display: 'inline-block',
-  // position: 'relative',
-  textDecoration: 'underline',
-  cursor: 'pointer',
-};
-
-const selectedSpanStyle = {
-  display: 'inline-block',
-  // position: 'relative',
-  backgroundColor: '#FFFF00',
-  cursor: 'auto',
-};
+const useStyles = makeStyles(() =>
+  createStyles({
+    span: {
+      display: 'inline-block',
+      textDecoration: 'underline',
+      cursor: 'pointer',
+    },
+    selected: {
+      textDecoration: 'none',
+      backgroundColor: '#FFFF00',
+      cursor: 'auto',
+    },
+  }),
+);
 
 export const Lyric = (props: RenderElementProps) => {
-  const lyric = props.element.children[0].text;
+  const lyric = props.element.children[0].text.replace(/\W/g, ''); // remove non-alphabetic chars
 
   const { selectedLyric, setSelectedLyric, setRhymes, setSynonyms, setRelatedWords } =
     useContext(Context);
 
+  const classes = useStyles();
+
   const [isSelected, setIsSelected] = useState(false);
+
+  const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
   const handleClick = () => {
     setSelectedLyric(lyric);
+
     dataTypes.forEach(async (dataType) => {
       const { data } = await fetchData(lyric, dataType);
 
@@ -53,11 +60,7 @@ export const Lyric = (props: RenderElementProps) => {
   }, [selectedLyric]);
 
   return (
-    <span
-      {...props.attributes}
-      onClick={handleClick}
-      style={isSelected ? selectedSpanStyle : spanStyle}
-    >
+    <span {...props.attributes} onClick={handleClick} className={className}>
       {props.children}
     </span>
   );
