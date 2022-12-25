@@ -42,7 +42,7 @@ const initialValue: Descendant[] = [
   },
 ];
 
-export const Editor = () => {
+export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [editorValue, setEditorValue] = useState(initialValue);
