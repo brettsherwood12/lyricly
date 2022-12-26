@@ -1,15 +1,16 @@
 import React from 'react';
 
+import { DataType, dataTypeDefinitions } from '../Constants';
+
 import type { DataPoint } from '../Types';
-
-const HIGH_SCORE_THRESHHOLD = 1500;
-
 interface Props {
+  type: DataType;
   result: DataPoint;
 }
 
-export const ResultSpan = ({ result }: Props) => {
-  const isHighScore = result.score > HIGH_SCORE_THRESHHOLD;
+export const ResultSpan = ({ type, result }: Props) => {
+  const dataType = dataTypeDefinitions[type];
+  const isHighScore = result.score > dataType.highScoreThreshhold;
 
   return <span style={isHighScore ? { fontWeight: 'bold' } : {}}>{result.word}, </span>;
 };

@@ -39,17 +39,17 @@ export const Results = () => {
       </Tabs>
       <TabPanel value={value} index={0}>
         {rhymes.map((rhyme) => (
-          <ResultSpan result={rhyme} />
+          <ResultSpan type={DataType.RHYMES} result={rhyme} />
         ))}
       </TabPanel>
       <TabPanel value={value} index={1}>
         {synonyms.map((synonym) => (
-          <span>{synonym.word} </span>
+          <ResultSpan type={DataType.SYNONYMS} result={synonym} />
         ))}
       </TabPanel>
       <TabPanel value={value} index={2}>
         {relatedWords.map((relatedWord) => (
-          <span>{relatedWord.word} </span>
+          <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} />
         ))}
       </TabPanel>
     </Box>
