@@ -19,15 +19,13 @@ export const fetchResults = async (lyric: string): Promise<Data> => {
   const synonymRequest = axios.get(synonymUrl);
   const relatedWordsRequest = axios.get(relatedWordsUrl);
 
-  const data = {} as Data;
-
-  axios.all([rhymeRequest, synonymRequest, relatedWordsRequest]).then((responses) => {
+  return axios.all([rhymeRequest, synonymRequest, relatedWordsRequest]).then((responses) => {
     const [rhymeReponse, synonymResponse, relatedWordResponse] = responses;
 
-    data.rhymes = rhymeReponse.data;
-    data.synonyms = synonymResponse.data;
-    data.relatedWords = relatedWordResponse.data;
+    return {
+      rhymes: rhymeReponse.data,
+      synonyms: synonymResponse.data,
+      relatedWords: relatedWordResponse.data,
+    };
   });
-
-  return data;
 };
