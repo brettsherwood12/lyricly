@@ -9,8 +9,10 @@ export type DataPoint = {
   tags?: string[]; // for related words
 };
 
-export type Response = {
-  data: DataPoint[];
+export type Data = {
+  rhymes: DataPoint[];
+  synonyms: DataPoint[];
+  relatedWords: DataPoint[];
 };
 
 export type ContextValue = {

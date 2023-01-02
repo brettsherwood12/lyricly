@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles, createStyles } from '@mui/styles';
 
 import { Context } from '../App';
-import { fetchData } from '../utils/fetchData';
+import { fetchResults } from '../Utils';
 
 import { DataType, dataTypes } from '../Constants';
 
@@ -35,20 +35,14 @@ export const LyricSpan = (props: RenderElementProps) => {
 
   const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setSelectedLyric(lyric);
 
-    dataTypes.forEach(async (dataType) => {
-      const { data } = await fetchData(lyric, dataType);
+    const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
 
-      if (dataType === DataType.RHYMES) {
-        setRhymes(data);
-      } else if (dataType === DataType.SYNONYMS) {
-        setSynonyms(data);
-      } else if (dataType === DataType.RELATED_WORDS) {
-        setRelatedWords(data);
-      }
-    });
+    setRhymes(rhymes);
+    setSynonyms(synonyms);
+    setRelatedWords(relatedWords);
   };
 
   useEffect(() => {
