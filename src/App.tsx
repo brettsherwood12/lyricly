@@ -8,6 +8,13 @@ import { DataType } from './Constants';
 
 import type { ContextValue, DataPoint } from './Types';
 
+const boxSx = {
+  height: 'calc(100vh - 48px)',
+  display: 'flex',
+  gap: '24px',
+  p: '24px',
+};
+
 const initialContextValue: ContextValue = {
   selectedLyric: '',
   setSelectedLyric: () => {},
@@ -45,7 +52,7 @@ function App() {
 
   return (
     <Context.Provider value={contextValue}>
-      <Box sx={{ height: '100vh', display: 'flex', gap: '16px', p: 2 }}>
+      <Box sx={boxSx}>
         <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
           <Box sx={{ minHeight: '36px' }}>
             <Typography variant="h5">lyric.ly</Typography>

@@ -106,6 +106,7 @@ export const Lyrics = () => {
     <Box sx={boxSx}>
       <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
         <Editable
+          style={{ height: '100%' }}
           placeholder={PLACEHOLDER_TEXT}
           renderElement={renderElement}
           onKeyDown={handleKeyDown}
