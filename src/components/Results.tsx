@@ -38,19 +38,22 @@ export const Results = () => {
         <Tab label="Related Words" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        {rhymes.map((rhyme) => (
-          <ResultSpan type={DataType.RHYMES} result={rhyme} />
-        ))}
+        {rhymes.map((rhyme, index) => {
+          const isLast = index === rhymes.length - 1 ? true : false;
+          return <ResultSpan type={DataType.RHYMES} result={rhyme} isLast={isLast} />;
+        })}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {synonyms.map((synonym) => (
-          <ResultSpan type={DataType.SYNONYMS} result={synonym} />
-        ))}
+        {synonyms.map((synonym, index) => {
+          const isLast = index === rhymes.length - 1 ? true : false;
+          return <ResultSpan type={DataType.SYNONYMS} result={synonym} isLast={isLast} />;
+        })}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {relatedWords.map((relatedWord) => (
-          <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} />
-        ))}
+        {relatedWords.map((relatedWord, index) => {
+          const isLast = index === rhymes.length - 1 ? true : false;
+          return <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} isLast={isLast} />;
+        })}
       </TabPanel>
     </Box>
   );
