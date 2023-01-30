@@ -3,9 +3,6 @@ import { makeStyles, createStyles } from '@mui/styles';
 
 import { Context } from '../App';
 import { fetchResults } from '../Utils';
-
-import { DataType, dataTypes } from '../Constants';
-
 import type { RenderElementProps } from 'slate-react';
 
 const useStyles = makeStyles(() =>
@@ -17,14 +14,15 @@ const useStyles = makeStyles(() =>
     },
     selected: {
       textDecoration: 'none',
-      backgroundColor: '#FFFF00',
+      color: 'white',
+      backgroundColor: '#3f51b5',
       cursor: 'auto',
     },
   }),
 );
 
 export const LyricSpan = (props: RenderElementProps) => {
-  const lyric = props.element.children[0].text.replace(/\W/g, '').toLowerCase(); // remove non-alphabetic chars
+  const lyric = props.element.children[0].text.replace(/[^A-Za-z']/g, ''); // remove non-alphabetic chars
 
   const { selectedLyric, setSelectedLyric, setRhymes, setSynonyms, setRelatedWords } =
     useContext(Context);
