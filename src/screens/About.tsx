@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, Link, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { Context } from '../App';
 
@@ -14,15 +15,23 @@ export const About = () => {
     event.preventDefault();
     setScreen(screen);
   };
+
   return (
     <Box>
       <Box sx={{ height: 'calc(100% - 128px)' }}>
-        <Box sx={{ minHeight: '36px' }}>
-          <Typography variant="h5">About</Typography>
+        <Box sx={{ minHeight: '36px', pb: 2 }}>
+          <Typography variant="h5">about lyric.ly</Typography>
         </Box>
-        <Link href="#" onClick={(event) => handleClick(event, Screen.HOME)}>
-          Back to App
-        </Link>
+        <Box>
+          <Typography gutterBottom>This is about lyric.ly</Typography>
+          <Link
+            href="#"
+            onClick={(event) => handleClick(event, Screen.HOME)}
+            sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}
+          >
+            <ArrowBackIcon fontSize="small" /> back to lyric.ly
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
