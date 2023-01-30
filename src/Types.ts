@@ -1,6 +1,6 @@
 import type { Dispatch } from 'react';
 
-import { DataType } from './Constants';
+import { DataType, Screen } from './Constants';
 
 export type DataPoint = {
   word: string;
@@ -16,6 +16,8 @@ export type Data = {
 };
 
 export type ContextValue = {
+  screen: Screen;
+  setScreen: Dispatch<Screen>;
   selectedLyric: string;
   setSelectedLyric: Dispatch<string>;
   selectedDataType: DataType;

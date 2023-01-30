@@ -1,3 +1,8 @@
+export enum Screen {
+  HOME = 'home',
+  ABOUT = 'about',
+}
+
 export enum Key {
   SPACE = ' ',
   ENTER = 'Enter',

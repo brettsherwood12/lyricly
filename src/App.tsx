@@ -2,17 +2,24 @@ import React, { useState, createContext } from 'react';
 import { Box } from '@mui/material';
 
 import { Home } from './screens/Home';
+import { About } from './screens/About';
+import { Footer } from './components/Footer';
 
-import { DataType } from './Constants';
+import { DataType, Screen } from './Constants';
 
 import type { ContextValue, DataPoint } from './Types';
 
+const footerHeight = 36;
+const paddingHeight = 48;
+
 const boxSx = {
-  height: 'calc(100vh - 48px)',
+  height: `calc(100vh - ${footerHeight + paddingHeight}px)`,
   p: '24px',
 };
 
 const initialContextValue: ContextValue = {
+  screen: '' as Screen,
+  setScreen: () => {},
   selectedLyric: '',
   setSelectedLyric: () => {},
   selectedDataType: '' as DataType,
@@ -28,6 +35,7 @@ const initialContextValue: ContextValue = {
 export const Context = createContext<ContextValue>(initialContextValue);
 
 function App() {
+  const [screen, setScreen] = useState<Screen>(Screen.HOME);
   const [selectedLyric, setSelectedLyric] = useState<string>('');
   const [selectedDataType, setSelectedDataType] = useState<DataType>(DataType.RHYMES);
   const [rhymes, setRhymes] = useState<DataPoint[]>([]);
@@ -35,6 +43,8 @@ function App() {
   const [relatedWords, setRelatedWords] = useState<DataPoint[]>([]);
 
   const contextValue = {
+    screen,
+    setScreen,
     selectedLyric,
     setSelectedLyric,
     selectedDataType,
@@ -50,8 +60,9 @@ function App() {
   return (
     <Context.Provider value={contextValue}>
       <Box sx={boxSx}>
-        <Home />
+        {(screen === Screen.HOME && <Home />) || (screen === Screen.ABOUT && <About />)}
       </Box>
+      <Footer />
     </Context.Provider>
   );
 }
