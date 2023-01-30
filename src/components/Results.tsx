@@ -9,11 +9,6 @@ import { ResultSpan } from './ResultSpan';
 import type { SyntheticEvent } from 'react';
 import { DataType } from '../Constants';
 
-const boxSx = {
-  height: '100%',
-  // backgroundColor: 'lightgray',
-};
-
 export const Results = () => {
   const { setSelectedDataType, rhymes, synonyms, relatedWords } = useContext(Context);
 
@@ -31,7 +26,7 @@ export const Results = () => {
   };
 
   return (
-    <Box sx={boxSx}>
+    <Box sx={{ height: '100%' }}>
       <Tabs value={value} onChange={handleChange}>
         <Tab label="Rhymes" />
         <Tab label="Synonyms" />

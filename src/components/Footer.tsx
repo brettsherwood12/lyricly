@@ -37,6 +37,7 @@ export const Footer = () => {
               underline="hover"
               onClick={(event) => handleClick(event, Screen.HOME)}
               disabled={isHomeScreen}
+              sx={{ fontSize: '14px' }}
             >
               lyric.ly
             </Link>
@@ -47,6 +48,7 @@ export const Footer = () => {
               underline="hover"
               onClick={(event) => handleClick(event, Screen.ABOUT)}
               disabled={isAboutScreen}
+              sx={{ fontSize: '14px' }}
             >
               about
             </Link>

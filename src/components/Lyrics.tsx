@@ -7,7 +7,7 @@ import { LyricSpan } from './LyricSpan';
 
 import { Key } from '../Constants';
 
-import type { KeyboardEvent, ClipboardEvent } from 'react';
+import type { ClipboardEvent, KeyboardEvent } from 'react';
 import type { BaseEditor, Descendant, Element } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
 

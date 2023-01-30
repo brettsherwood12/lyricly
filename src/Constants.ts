@@ -23,14 +23,14 @@ export const dataTypes = [DataType.RHYMES, DataType.SYNONYMS, DataType.RELATED_W
 export const dataTypeDefinitions = {
   [DataType.RHYMES]: {
     queryParamName: 'rel_rhy',
-    highScoreThreshhold: 1500,
+    noDataMessage: 'rhymes',
   },
   [DataType.SYNONYMS]: {
     queryParamName: 'rel_syn',
-    highScoreThreshhold: 500,
+    noDataMessage: 'synonyms',
   },
   [DataType.RELATED_WORDS]: {
     queryParamName: 'ml',
-    highScoreThreshhold: 1000,
+    noDataMessage: 'related words',
   },
 };
