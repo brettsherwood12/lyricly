@@ -76,7 +76,14 @@ export const Lyrics = () => {
 
       Transforms.insertNodes(editor, nodes);
     } else if (isDeleteKey || isBackspaceKey) {
-      console.log(event);
+      Transforms.delete(editor);
+
+      // very hacky, but works, if the offset equals 0, then the above only
+      // deleted a node with an empty string, call editor.deleteBackward in order to
+      // actually delete a character
+      if (editor.selection?.anchor.offset === 0) {
+        editor.deleteBackward('character');
+      }
     }
   };
 
