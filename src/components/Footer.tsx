@@ -16,9 +16,13 @@ const boxSx = {
 };
 
 export const Footer = () => {
-  const { setScreen } = useContext(Context);
+  const { screen, setScreen } = useContext(Context);
+
+  const isHomeScreen = screen === Screen.HOME;
+  const isAboutScreen = screen === Screen.ABOUT;
 
   const handleClick = (event: MouseEvent, screen: Screen) => {
+    console.log('called');
     event.preventDefault();
     setScreen(screen);
   };
@@ -29,18 +33,28 @@ export const Footer = () => {
       <Box sx={boxSx}>
         <Box sx={{ display: 'flex' }}>
           <Box pr={3}>
-            <Link href="#" underline="hover" onClick={(event) => handleClick(event, Screen.HOME)}>
+            <Link
+              component="button"
+              underline="hover"
+              onClick={(event) => handleClick(event, Screen.HOME)}
+              disabled={isHomeScreen}
+            >
               lyric.ly
             </Link>
           </Box>
           <Box pr={3}>
-            <Link href="#" underline="hover" onClick={(event) => handleClick(event, Screen.ABOUT)}>
+            <Link
+              component="button"
+              underline="hover"
+              onClick={(event) => handleClick(event, Screen.ABOUT)}
+              disabled={isAboutScreen}
+            >
               about
             </Link>
           </Box>
         </Box>
         <Box>
-          <Typography>
+          <Typography variant="body2">
             &copy; {year}{' '}
             <Link href="https://github.com/clockmakerbrett" target="blank">
               Brett Sherwood

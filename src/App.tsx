@@ -1,12 +1,12 @@
 import React, { useState, createContext } from 'react';
-import { Box } from '@mui/material';
+import { Box, ThemeProvider } from '@mui/material';
 
 import { Home } from './screens/Home';
 import { About } from './screens/About';
 import { Footer } from './components/Footer';
 
+import { theme } from './Theme';
 import { DataType, Screen } from './Constants';
-
 import type { ContextValue, DataPoint } from './Types';
 
 const footerHeight = 36;
@@ -58,12 +58,12 @@ function App() {
   };
 
   return (
-    <Context.Provider value={contextValue}>
-      <Box sx={boxSx}>
-        {(screen === Screen.HOME && <Home />) || (screen === Screen.ABOUT && <About />)}
-      </Box>
-      <Footer />
-    </Context.Provider>
+    <ThemeProvider theme={theme}>
+      <Context.Provider value={contextValue}>
+        <Box sx={boxSx}>{(screen === Screen.ABOUT && <About />) || <Home />}</Box>
+        <Footer />
+      </Context.Provider>
+    </ThemeProvider>
   );
 }
 
