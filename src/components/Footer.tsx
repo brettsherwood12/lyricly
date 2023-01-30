@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { Box, Divider, Link, Typography } from '@mui/material';
 
 import { Context } from '../App';
-import { Screen } from '../Constants';
+import { footerHeight, Screen } from '../Constants';
 
 import type { MouseEvent } from 'react';
 
 const year = new Date().getFullYear();
 
 const boxSx = {
-  height: '36px',
+  height: `${footerHeight}px`,
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -22,7 +22,6 @@ export const Footer = () => {
   const isAboutScreen = screen === Screen.ABOUT;
 
   const handleClick = (event: MouseEvent, screen: Screen) => {
-    console.log('called');
     event.preventDefault();
     setScreen(screen);
   };

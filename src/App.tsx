@@ -6,10 +6,9 @@ import { About } from './screens/About';
 import { Footer } from './components/Footer';
 
 import { theme } from './Theme';
-import { DataType, Screen } from './Constants';
+import { DataType, footerHeight, Screen } from './Constants';
 import type { ContextValue, DataPoint } from './Types';
 
-const footerHeight = 36;
 const paddingHeight = 48;
 
 const boxSx = {

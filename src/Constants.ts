@@ -1,3 +1,5 @@
+export const footerHeight = 36;
+
 export enum Screen {
   HOME = 'home',
   ABOUT = 'about',
