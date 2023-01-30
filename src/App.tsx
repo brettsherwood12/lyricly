@@ -1,8 +1,7 @@
 import React, { useState, createContext } from 'react';
-import { Box, Typography, Divider } from '@mui/material';
+import { Box } from '@mui/material';
 
-import { Lyrics } from './components/Lyrics';
-import { Results } from './components/Results';
+import { Home } from './screens/Home';
 
 import { DataType } from './Constants';
 
@@ -10,8 +9,6 @@ import type { ContextValue, DataPoint } from './Types';
 
 const boxSx = {
   height: 'calc(100vh - 48px)',
-  display: 'flex',
-  gap: '24px',
   p: '24px',
 };
 
@@ -53,19 +50,7 @@ function App() {
   return (
     <Context.Provider value={contextValue}>
       <Box sx={boxSx}>
-        <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
-          <Box sx={{ minHeight: '36px' }}>
-            <Typography variant="h5">lyric.ly</Typography>
-          </Box>
-          <Lyrics />
-        </Box>
-        <Divider orientation="vertical" flexItem={true} />
-        <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
-          <Box sx={{ minHeight: '36px' }}>
-            {selectedLyric && <Typography variant="h5">'{selectedLyric}'</Typography>}
-          </Box>
-          <Results />
-        </Box>
+        <Home />
       </Box>
     </Context.Provider>
   );
