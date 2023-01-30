@@ -1,6 +1,10 @@
 import { createTheme } from '@mui/material';
 
-const { palette } = createTheme(); // mui default theme palette
+export const colors = {
+  white: '#FFFFFF',
+  disabled: 'rgba(0, 0, 0, 0.26)',
+  highlight: '#1976d2',
+};
 
 export const theme = createTheme({
   components: {
@@ -8,7 +12,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '&[disabled]': {
-            color: palette.action.disabled,
+            color: colors.disabled,
             pointerEvents: 'none',
           },
         },

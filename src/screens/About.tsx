@@ -41,7 +41,7 @@ export const About = () => {
             </Typography>
             <Typography gutterBottom>
               Your lyrics are totally secure, as they never leave your web browser, only individual
-              words are sent to 3rd party services to retrieve data.
+              words are sent across the interwebs.
             </Typography>
           </Box>
           <Box>

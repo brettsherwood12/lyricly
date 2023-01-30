@@ -3,6 +3,8 @@ import { makeStyles, createStyles } from '@mui/styles';
 
 import { Context } from '../App';
 import { fetchResults } from '../Utils';
+import { colors } from '../Theme';
+
 import type { RenderElementProps } from 'slate-react';
 
 const useStyles = makeStyles(() =>
@@ -14,8 +16,8 @@ const useStyles = makeStyles(() =>
     },
     selected: {
       textDecoration: 'none',
-      color: 'white',
-      backgroundColor: '#3f51b5',
+      color: colors.white,
+      backgroundColor: colors.highlight,
       cursor: 'auto',
     },
   }),

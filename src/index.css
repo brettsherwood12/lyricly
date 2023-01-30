@@ -1,5 +1,6 @@
 body {
-  font-family: 'Helvetica Neue';
-  color: 'darkgray';
   margin: 0;
+  padding: 0;
+  /* mui theme does not affect text editor, so setting font here */
+  font-family: 'Helvetica Neue';
 }
