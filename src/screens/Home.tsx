@@ -16,14 +16,14 @@ export const Home = () => {
 
   return (
     <Box sx={boxSx}>
-      <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
+      <Box sx={{ width: '50%' }}>
         <Box sx={{ minHeight: '36px' }}>
           <Typography variant="h5">lyric.ly</Typography>
         </Box>
         <Lyrics />
       </Box>
       <Divider orientation="vertical" flexItem={true} />
-      <Box sx={{ width: '50%', height: 'calc(100% - 128px)' }}>
+      <Box sx={{ width: '50%' }}>
         <Box sx={{ minHeight: '36px' }}>
           {selectedLyric && <Typography variant="h5">'{selectedLyric}'</Typography>}
         </Box>

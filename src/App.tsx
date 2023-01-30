@@ -56,10 +56,12 @@ function App() {
     setRelatedWords,
   };
 
+  const isAboutScreen = screen === Screen.ABOUT;
+
   return (
     <ThemeProvider theme={theme}>
       <Context.Provider value={contextValue}>
-        <Box sx={boxSx}>{(screen === Screen.ABOUT && <About />) || <Home />}</Box>
+        <Box sx={boxSx}>{(isAboutScreen && <About />) || <Home />}</Box>
         <Footer />
       </Context.Provider>
     </ThemeProvider>
