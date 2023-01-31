@@ -5,7 +5,7 @@ import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
 
-import { Key } from '../Constants';
+import { footerHeight, headerHeight, Key } from '../Constants';
 
 import type { ClipboardEvent, KeyboardEvent } from 'react';
 import type { BaseEditor, Descendant, Element } from 'slate';
@@ -36,6 +36,14 @@ const initialValue: Descendant[] = [
     children: [{ text: '' }],
   },
 ];
+
+const paddingHeight = 32;
+const heightDiff = headerHeight + footerHeight + paddingHeight;
+const editorStyle = {
+  height: '100%',
+  maxHeight: `calc(100vh - ${heightDiff}px)`,
+  overflow: 'scroll',
+};
 
 export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -108,11 +116,11 @@ export const Lyrics = () => {
     <Box sx={{ height: '100%' }}>
       <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
         <Editable
-          style={{ height: '100%' }}
           placeholder={PLACEHOLDER_TEXT}
           renderElement={renderElement}
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
+          style={editorStyle}
         />
       </Slate>
     </Box>
