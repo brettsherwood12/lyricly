@@ -38,6 +38,10 @@ const editorStyle = {
   maxHeight: `calc(100vh - ${heightDiff}px)`,
 };
 
+const SpaceSpan = ({ child }: any) => {
+  return <span data-custom-type="space">{child}</span>;
+};
+
 export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
@@ -55,11 +59,7 @@ export const Lyrics = () => {
             if (customType === CustomType.LYRIC) {
               return <LyricSpan key={index} child={child} />;
             } else if (customType === CustomType.SPACE) {
-              return (
-                <span key={index} data-custom-type="space">
-                  {child}
-                </span>
-              );
+              return <SpaceSpan key={index} child={child} />;
             }
 
             return <span key={index}>{child}</span>;
@@ -79,16 +79,6 @@ export const Lyrics = () => {
     if (isSpaceKey || isEnterKey) {
       event.preventDefault();
       console.log(editor);
-      //@ts-ignore
-      // Transforms.setNodes(editor, { customType: CustomType.LYRIC });
-
-      // const whitespace = isEnterKey ? '\n' : ' ';
-
-      // const whitespaceNode = { type: 'span', children: [{ text: whitespace }] };
-      // const nextLyricNode = { type: 'span', children: [{ text: '' }] };
-      // const nodes = [whitespaceNode, nextLyricNode];
-
-      // Transforms.insertNodes(editor, nodes);
     }
   };
 

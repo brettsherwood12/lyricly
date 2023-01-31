@@ -5,8 +5,6 @@ import { Context } from '../App';
 import { fetchResults } from '../Utils';
 import { colors } from '../Theme';
 
-import type { RenderElementProps } from 'slate-react';
-
 const useStyles = makeStyles(() =>
   createStyles({
     span: {
