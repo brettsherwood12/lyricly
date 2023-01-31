@@ -105,7 +105,7 @@ export const Lyrics = () => {
   };
 
   return (
-    <Box sx={{ height: '100%', pt: 2 }}>
+    <Box sx={{ height: '100%' }}>
       <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
         <Editable
           style={{ height: '100%' }}

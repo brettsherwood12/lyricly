@@ -53,7 +53,7 @@ export const Results = () => {
 
   return (
     <Box>
-      <Box pt={2}>
+      <Box>
         {hasSelectedLyric ? (
           <Typography variant="h6">'{selectedLyric}'</Typography>
         ) : (
@@ -62,43 +62,45 @@ export const Results = () => {
           </Typography>
         )}
       </Box>
-      <Tabs value={value} onChange={handleChange}>
-        <Tab label="Rhymes" />
-        <Tab label="Synonyms" />
-        <Tab label="Related Words" />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        {hasNoRhymes ? (
-          <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />
-        ) : (
-          rhymes.map((rhyme, index) => {
-            const isLast = index === rhymes.length - 1 ? true : false;
-            return <ResultSpan type={DataType.RHYMES} result={rhyme} isLast={isLast} />;
-          })
-        )}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        {hasNoSynonyms ? (
-          <NoDataMessage type={DataType.SYNONYMS} lyric={selectedLyric} />
-        ) : (
-          synonyms.map((synonym, index) => {
-            const isLast = index === rhymes.length - 1 ? true : false;
-            return <ResultSpan type={DataType.SYNONYMS} result={synonym} isLast={isLast} />;
-          })
-        )}
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        {hasNoRelatedWords ? (
-          <NoDataMessage type={DataType.RELATED_WORDS} lyric={selectedLyric} />
-        ) : (
-          relatedWords.map((relatedWord, index) => {
-            const isLast = index === rhymes.length - 1 ? true : false;
-            return (
-              <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} isLast={isLast} />
-            );
-          })
-        )}
-      </TabPanel>
+      <Box>
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label="Rhymes" />
+          <Tab label="Synonyms" />
+          <Tab label="Related Words" />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          {hasNoRhymes ? (
+            <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />
+          ) : (
+            rhymes.map((rhyme, index) => {
+              const isLast = index === rhymes.length - 1 ? true : false;
+              return <ResultSpan type={DataType.RHYMES} result={rhyme} isLast={isLast} />;
+            })
+          )}
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {hasNoSynonyms ? (
+            <NoDataMessage type={DataType.SYNONYMS} lyric={selectedLyric} />
+          ) : (
+            synonyms.map((synonym, index) => {
+              const isLast = index === rhymes.length - 1 ? true : false;
+              return <ResultSpan type={DataType.SYNONYMS} result={synonym} isLast={isLast} />;
+            })
+          )}
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          {hasNoRelatedWords ? (
+            <NoDataMessage type={DataType.RELATED_WORDS} lyric={selectedLyric} />
+          ) : (
+            relatedWords.map((relatedWord, index) => {
+              const isLast = index === rhymes.length - 1 ? true : false;
+              return (
+                <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} isLast={isLast} />
+              );
+            })
+          )}
+        </TabPanel>
+      </Box>
     </Box>
   );
 };
