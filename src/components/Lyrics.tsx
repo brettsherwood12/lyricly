@@ -5,20 +5,14 @@ import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
 
-import { footerHeight, headerHeight, Key } from '../Constants';
+import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
 
 import type { ClipboardEvent, KeyboardEvent } from 'react';
-import type { BaseEditor, Descendant, Element } from 'slate';
+import type { BaseEditor, Descendant } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
 
-type CustomText = { text: string };
+type CustomText = { text: string; customType?: CustomType };
 type CustomElement = { type: string; children: CustomText[] };
-
-type RenderElementPropsWithCustomProperty = RenderElementProps & {
-  element: Element & {
-    isLyric?: boolean;
-  };
-};
 
 declare module 'slate' {
   interface CustomTypes {
@@ -33,7 +27,7 @@ const PLACEHOLDER_TEXT = 'Type or paste lyrics here...';
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
-    children: [{ text: '' }],
+    children: [{ text: '', customType: CustomType.INIT }],
   },
 ];
 
@@ -42,7 +36,6 @@ const heightDiff = headerHeight + footerHeight + paddingHeight;
 const editorStyle = {
   height: '100%',
   maxHeight: `calc(100vh - ${heightDiff}px)`,
-  overflow: 'scroll',
 };
 
 export const Lyrics = () => {
@@ -50,12 +43,31 @@ export const Lyrics = () => {
 
   const [editorValue, setEditorValue] = useState(initialValue);
 
-  const renderElement = useCallback((props: RenderElementPropsWithCustomProperty) => {
-    if (props.element.isLyric) {
-      return <LyricSpan {...props} />;
-    } else {
-      return <span {...props.attributes}>{props.children}</span>;
-    }
+  const renderElement = useCallback((props: RenderElementProps) => {
+    const { children, element } = props;
+
+    return (
+      <>
+        <span>
+          {children.map((child: any, index: number) => {
+            const { customType } = element.children[index];
+
+            if (customType === CustomType.LYRIC) {
+              return <LyricSpan key={index} child={child} />;
+            } else if (customType === CustomType.SPACE) {
+              return (
+                <span key={index} data-custom-type="space">
+                  {child}
+                </span>
+              );
+            }
+
+            return <span key={index}>{child}</span>;
+          })}
+        </span>
+        <br />
+      </>
+    );
   }, []);
 
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -63,30 +75,20 @@ export const Lyrics = () => {
 
     const isSpaceKey = key === Key.SPACE;
     const isEnterKey = key === Key.ENTER;
-    const isDeleteKey = key === Key.DELETE;
-    const isBackspaceKey = key === Key.BACKSPACE;
 
     if (isSpaceKey || isEnterKey) {
       event.preventDefault();
+      console.log(editor);
       //@ts-ignore
-      Transforms.setNodes(editor, { isLyric: true });
+      // Transforms.setNodes(editor, { customType: CustomType.LYRIC });
 
-      const whitespace = isEnterKey ? '\n' : ' ';
+      // const whitespace = isEnterKey ? '\n' : ' ';
 
-      const whitespaceNode = { type: 'span', children: [{ text: whitespace }] };
-      const nextLyricNode = { type: 'span', children: [{ text: '' }] };
-      const nodes = [whitespaceNode, nextLyricNode];
+      // const whitespaceNode = { type: 'span', children: [{ text: whitespace }] };
+      // const nextLyricNode = { type: 'span', children: [{ text: '' }] };
+      // const nodes = [whitespaceNode, nextLyricNode];
 
-      Transforms.insertNodes(editor, nodes);
-    } else if (isDeleteKey || isBackspaceKey) {
-      Transforms.delete(editor);
-
-      // very hacky, but works, if the offset equals 0, then the above only
-      // deleted a node with an empty string, call editor.deleteBackward in order to
-      // actually delete a character
-      if (editor.selection?.anchor.offset === 0) {
-        editor.deleteBackward('character');
-      }
+      // Transforms.insertNodes(editor, nodes);
     }
   };
 
@@ -96,16 +98,19 @@ export const Lyrics = () => {
     const pasteText = event.clipboardData.getData('text/plain');
     const lines = pasteText.split('\n');
 
-    let nodes: Descendant[] = [];
+    let nodes: any = [];
 
-    lines.forEach((line) => {
-      const lyrics = line.split(' ');
-      lyrics.forEach((lyric) => {
-        const whitespaceNode = { type: 'span', children: [{ text: ' ' }] };
-        const lyricNode = { type: 'span', children: [{ text: lyric }], isLyric: true };
+    lines.forEach((line, lineIndex) => {
+      nodes.push({ type: 'paragraph', children: [] });
 
-        nodes.push(lyricNode);
-        nodes.push(whitespaceNode);
+      const words = line.split(' ');
+
+      words.forEach((word, wordIndex) => {
+        nodes[lineIndex].children.push({ text: word, customType: CustomType.LYRIC });
+
+        if (wordIndex < words.length - 1) {
+          nodes[lineIndex].children.push({ text: ' ', customType: CustomType.SPACE });
+        }
       });
     });
 

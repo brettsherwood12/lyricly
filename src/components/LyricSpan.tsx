@@ -23,8 +23,8 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-export const LyricSpan = (props: RenderElementProps) => {
-  const lyric = props.element.children[0].text.replace(/[^A-Za-z']/g, ''); // remove non-alphabetic chars
+export const LyricSpan = ({ child }: any) => {
+  const lyric = child.props.text.text.replace(/[^A-Za-z']/g, ''); // remove non-alphabetic chars
 
   const { selectedLyric, setSelectedLyric, setRhymes, setSynonyms, setRelatedWords } =
     useContext(Context);
@@ -54,8 +54,8 @@ export const LyricSpan = (props: RenderElementProps) => {
   }, [selectedLyric]);
 
   return (
-    <span {...props.attributes} onClick={handleClick} className={className}>
-      {props.children}
+    <span data-custom-type="lyric" onClick={handleClick} className={className}>
+      {child}
     </span>
   );
 };

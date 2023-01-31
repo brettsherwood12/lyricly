@@ -19,8 +19,6 @@ export enum DataType {
   RELATED_WORDS = 'related',
 }
 
-export const dataTypes = [DataType.RHYMES, DataType.SYNONYMS, DataType.RELATED_WORDS];
-
 export const dataTypeDefinitions = {
   [DataType.RHYMES]: {
     name: 'rhymes',
@@ -35,3 +33,9 @@ export const dataTypeDefinitions = {
     query: 'ml',
   },
 };
+
+export enum CustomType {
+  INIT = 'init',
+  LYRIC = 'lyric',
+  SPACE = 'space',
+}
