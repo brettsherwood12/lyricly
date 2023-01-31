@@ -44,12 +44,11 @@ export const About = () => {
           </Typography>
         </Box>
         <Box>
-          <Link
-            href="#"
-            onClick={(event) => handleClick(event, Screen.HOME)}
-            sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}
-          >
-            <ArrowBackIcon fontSize="small" /> back to lyric.ly
+          <Link href="#" onClick={(event) => handleClick(event, Screen.HOME)}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <ArrowBackIcon fontSize="small" sx={{ mt: 0.25 }} />
+              <Typography>back to lyric.ly</Typography>
+            </Box>
           </Link>
         </Box>
       </Box>

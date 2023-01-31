@@ -38,9 +38,8 @@ export const Footer = () => {
               underline="hover"
               onClick={(event) => handleClick(event, Screen.HOME)}
               disabled={isHomeScreen}
-              sx={{ fontSize: '14px' }}
             >
-              lyric.ly
+              <Typography variant="body2">lyric.ly</Typography>
             </Link>
           </Box>
           <Box pr={3}>
@@ -49,16 +48,15 @@ export const Footer = () => {
               underline="hover"
               onClick={(event) => handleClick(event, Screen.ABOUT)}
               disabled={isAboutScreen}
-              sx={{ fontSize: '14px' }}
             >
-              about
+              <Typography variant="body2">about</Typography>
             </Link>
           </Box>
         </Box>
         <Box>
           <Typography variant="body2">
             &copy; {year}{' '}
-            <Link href="https://github.com/clockmakerbrett" target="blank">
+            <Link href="https://github.com/clockmakerbrett" target="blank" underline="hover">
               Brett Sherwood
             </Link>{' '}
           </Typography>
