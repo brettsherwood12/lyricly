@@ -1,12 +1,18 @@
 import React, { useContext } from 'react';
+import type { MouseEvent } from 'react';
 import { Box, Link, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { Context } from '../App';
-
 import { Screen } from '../Constants';
 
-import type { MouseEvent } from 'react';
+const boxSx = {
+  height: '100%',
+  maxWidth: '1024px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+};
 
 export const About = () => {
   const { setScreen } = useContext(Context);
@@ -17,14 +23,7 @@ export const About = () => {
   };
 
   return (
-    <Box
-      sx={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-      }}
-    >
+    <Box sx={boxSx}>
       <Box pt={2}>
         <Box pb={2}>
           <Typography variant="h5">about</Typography>
@@ -35,12 +34,17 @@ export const About = () => {
             lyrics.
           </Typography>
           <Typography gutterBottom>
-            Just click on a lyric in the text editor and lyric.ly will instantly fetch rhymes,
-            synonyms and related words for it.
+            No more fumbling around with word documents, endless Google searches, and multiple tabs.
+            Get everything you need in one place so that you can better focus on the most important
+            thing, writing your song.
           </Typography>
           <Typography gutterBottom>
-            Your lyrics are totally secure, as they never leave your web browser, only individual
-            words are sent across the interwebs.
+            Just click on a lyric in the text editor and <strong>lyric.ly</strong> will instantly
+            find rhymes, synonyms and related words for it.
+          </Typography>
+          <Typography gutterBottom>
+            Your lyrics are totally secure, as they never leave your web browser. Only individual
+            words are sent across the internet.
           </Typography>
         </Box>
         <Box>
