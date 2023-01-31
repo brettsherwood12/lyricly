@@ -23,15 +23,15 @@ export const dataTypes = [DataType.RHYMES, DataType.SYNONYMS, DataType.RELATED_W
 
 export const dataTypeDefinitions = {
   [DataType.RHYMES]: {
-    queryParamName: 'rel_rhy',
-    noDataMessage: 'rhymes',
+    name: 'rhymes',
+    query: 'rel_rhy',
   },
   [DataType.SYNONYMS]: {
-    queryParamName: 'rel_syn',
-    noDataMessage: 'synonyms',
+    name: 'synonyms',
+    query: 'rel_syn',
   },
   [DataType.RELATED_WORDS]: {
-    queryParamName: 'ml',
-    noDataMessage: 'related words',
+    name: 'related words',
+    query: 'ml',
   },
 };

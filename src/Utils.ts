@@ -6,9 +6,9 @@ import type { Data } from './Types';
 
 const baseUrl = 'https://api.datamuse.com';
 
-const rhymeQuery = dataTypeDefinitions[DataType.RHYMES].queryParamName;
-const synonymQuery = dataTypeDefinitions[DataType.SYNONYMS].queryParamName;
-const relatedWordsQuery = dataTypeDefinitions[DataType.RELATED_WORDS].queryParamName;
+const rhymeQuery = dataTypeDefinitions[DataType.RHYMES].query;
+const synonymQuery = dataTypeDefinitions[DataType.SYNONYMS].query;
+const relatedWordsQuery = dataTypeDefinitions[DataType.RELATED_WORDS].query;
 
 export const fetchResults = async (lyric: string): Promise<Data> => {
   const rhymeUrl = `${baseUrl}/words?${rhymeQuery}=${lyric}`;

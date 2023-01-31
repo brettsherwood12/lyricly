@@ -16,23 +16,32 @@ interface Props {
 }
 
 const NoDataMessage = ({ type, lyric }: Props) => {
-  const { noDataMessage } = dataTypeDefinitions[type];
+  const dataTypeName = dataTypeDefinitions[type].name;
 
   return (
     <Typography sx={{ fontStyle: 'italic' }}>
-      No {noDataMessage} found for '{lyric}'
+      No {dataTypeName} found for '{lyric}'
     </Typography>
   );
 };
 
 export const Results = () => {
-  const { selectedLyric, setSelectedDataType, rhymes, synonyms, relatedWords } =
+  const { selectedLyric, selectedDataType, setSelectedDataType, rhymes, synonyms, relatedWords } =
     useContext(Context);
+
+  const hasSelectedLyric = !isEmpty(selectedLyric);
+
+  const hasNoRhymes = hasSelectedLyric && isEmpty(rhymes);
+  const hasNoSynonyms = hasSelectedLyric && isEmpty(synonyms);
+  const hasNoRelatedWords = hasSelectedLyric && isEmpty(relatedWords);
+
+  const dataTypeName = dataTypeDefinitions[selectedDataType].name;
 
   const [value, setValue] = useState(0);
 
   const handleChange = (_event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
+
     if (newValue === 0) {
       setSelectedDataType(DataType.RHYMES);
     } else if (newValue === 1) {
@@ -42,12 +51,6 @@ export const Results = () => {
     }
   };
 
-  const hasSelectedLyric = !isEmpty(selectedLyric);
-
-  const hasNoRhymes = hasSelectedLyric && isEmpty(rhymes);
-  const hasNoSynonyms = hasSelectedLyric && isEmpty(synonyms);
-  const hasNoRelatedWords = hasSelectedLyric && isEmpty(relatedWords);
-
   return (
     <Box>
       <Box pt={2}>
@@ -55,7 +58,7 @@ export const Results = () => {
           <Typography variant="h6">'{selectedLyric}'</Typography>
         ) : (
           <Typography variant="h6" sx={{ fontStyle: 'italic' }}>
-            Select a lyric
+            Select a lyric to find {dataTypeName}
           </Typography>
         )}
       </Box>
