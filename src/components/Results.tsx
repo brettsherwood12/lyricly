@@ -1,16 +1,33 @@
 import React, { useContext, useState } from 'react';
 import { Tabs, Tab } from '@mui/material';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { isEmpty } from 'lodash';
+import type { SyntheticEvent } from 'react';
 
 import { Context } from '../App';
 import { TabPanel } from './TabPanel';
 import { ResultSpan } from './ResultSpan';
 
-import type { SyntheticEvent } from 'react';
-import { DataType } from '../Constants';
+import { DataType, dataTypeDefinitions } from '../Constants';
+
+interface Props {
+  type: DataType;
+  lyric: string;
+}
+
+const NoDataMessage = ({ type, lyric }: Props) => {
+  const { noDataMessage } = dataTypeDefinitions[type];
+
+  return (
+    <Typography sx={{ fontStyle: 'italic' }}>
+      No {noDataMessage} found for '{lyric}'
+    </Typography>
+  );
+};
 
 export const Results = () => {
-  const { setSelectedDataType, rhymes, synonyms, relatedWords } = useContext(Context);
+  const { selectedLyric, setSelectedDataType, rhymes, synonyms, relatedWords } =
+    useContext(Context);
 
   const [value, setValue] = useState(0);
 
@@ -25,6 +42,10 @@ export const Results = () => {
     }
   };
 
+  const hasNoRhymes = !isEmpty(selectedLyric) && isEmpty(rhymes);
+  const hasNoSynonyms = !isEmpty(selectedLyric) && isEmpty(synonyms);
+  const hasNoRelatedWords = !isEmpty(selectedLyric) && isEmpty(relatedWords);
+
   return (
     <Box sx={{ height: '100%' }}>
       <Tabs value={value} onChange={handleChange}>
@@ -33,22 +54,36 @@ export const Results = () => {
         <Tab label="Related Words" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        {rhymes.map((rhyme, index) => {
-          const isLast = index === rhymes.length - 1 ? true : false;
-          return <ResultSpan type={DataType.RHYMES} result={rhyme} isLast={isLast} />;
-        })}
+        {hasNoRhymes ? (
+          <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />
+        ) : (
+          rhymes.map((rhyme, index) => {
+            const isLast = index === rhymes.length - 1 ? true : false;
+            return <ResultSpan type={DataType.RHYMES} result={rhyme} isLast={isLast} />;
+          })
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {synonyms.map((synonym, index) => {
-          const isLast = index === rhymes.length - 1 ? true : false;
-          return <ResultSpan type={DataType.SYNONYMS} result={synonym} isLast={isLast} />;
-        })}
+        {hasNoSynonyms ? (
+          <NoDataMessage type={DataType.SYNONYMS} lyric={selectedLyric} />
+        ) : (
+          synonyms.map((synonym, index) => {
+            const isLast = index === rhymes.length - 1 ? true : false;
+            return <ResultSpan type={DataType.SYNONYMS} result={synonym} isLast={isLast} />;
+          })
+        )}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {relatedWords.map((relatedWord, index) => {
-          const isLast = index === rhymes.length - 1 ? true : false;
-          return <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} isLast={isLast} />;
-        })}
+        {hasNoRelatedWords ? (
+          <NoDataMessage type={DataType.RELATED_WORDS} lyric={selectedLyric} />
+        ) : (
+          relatedWords.map((relatedWord, index) => {
+            const isLast = index === rhymes.length - 1 ? true : false;
+            return (
+              <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} isLast={isLast} />
+            );
+          })
+        )}
       </TabPanel>
     </Box>
   );
