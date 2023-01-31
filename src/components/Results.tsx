@@ -42,12 +42,23 @@ export const Results = () => {
     }
   };
 
-  const hasNoRhymes = !isEmpty(selectedLyric) && isEmpty(rhymes);
-  const hasNoSynonyms = !isEmpty(selectedLyric) && isEmpty(synonyms);
-  const hasNoRelatedWords = !isEmpty(selectedLyric) && isEmpty(relatedWords);
+  const hasSelectedLyric = !isEmpty(selectedLyric);
+
+  const hasNoRhymes = hasSelectedLyric && isEmpty(rhymes);
+  const hasNoSynonyms = hasSelectedLyric && isEmpty(synonyms);
+  const hasNoRelatedWords = hasSelectedLyric && isEmpty(relatedWords);
 
   return (
-    <Box sx={{ height: '100%' }}>
+    <Box>
+      <Box pt={2}>
+        {hasSelectedLyric ? (
+          <Typography variant="h6">'{selectedLyric}'</Typography>
+        ) : (
+          <Typography variant="h6" sx={{ fontStyle: 'italic' }}>
+            Select a lyric
+          </Typography>
+        )}
+      </Box>
       <Tabs value={value} onChange={handleChange}>
         <Tab label="Rhymes" />
         <Tab label="Synonyms" />

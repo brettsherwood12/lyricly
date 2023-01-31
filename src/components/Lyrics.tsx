@@ -28,11 +28,6 @@ declare module 'slate' {
   }
 }
 
-const boxSx = {
-  height: '100%',
-  pt: 2,
-};
-
 const PLACEHOLDER_TEXT = 'Type or paste lyrics here...';
 
 const initialValue: Descendant[] = [
@@ -110,7 +105,7 @@ export const Lyrics = () => {
   };
 
   return (
-    <Box sx={boxSx}>
+    <Box sx={{ height: '100%', pt: 2 }}>
       <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
         <Editable
           style={{ height: '100%' }}

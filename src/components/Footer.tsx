@@ -13,6 +13,7 @@ const boxSx = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  px: '24px',
 };
 
 export const Footer = () => {
@@ -27,7 +28,7 @@ export const Footer = () => {
   };
 
   return (
-    <Box px="24px">
+    <Box>
       <Divider />
       <Box sx={boxSx}>
         <Box sx={{ display: 'flex' }}>

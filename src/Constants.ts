@@ -1,4 +1,5 @@
-export const footerHeight = 36;
+export const headerHeight = 64;
+export const footerHeight = 48;
 
 export enum Screen {
   HOME = 'home',

@@ -3,18 +3,12 @@ import { Box, ThemeProvider } from '@mui/material';
 
 import { Home } from './screens/Home';
 import { About } from './screens/About';
+import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 
 import { theme } from './Theme';
-import { DataType, footerHeight, Screen } from './Constants';
+import { DataType, footerHeight, headerHeight, Screen } from './Constants';
 import type { ContextValue, DataPoint } from './Types';
-
-const paddingHeight = 48;
-
-const boxSx = {
-  height: `calc(100vh - ${footerHeight + paddingHeight}px)`,
-  p: '24px',
-};
 
 const initialContextValue: ContextValue = {
   screen: '' as Screen,
@@ -61,8 +55,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Context.Provider value={contextValue}>
-        <Box sx={boxSx}>{(isAboutScreen && <About />) || <Home />}</Box>
-        <Footer />
+        <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <Header />
+          <Box sx={{ height: '100%', px: '24px' }}>{(isAboutScreen && <About />) || <Home />}</Box>
+          <Footer />
+        </Box>
       </Context.Provider>
     </ThemeProvider>
   );
