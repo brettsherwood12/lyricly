@@ -8,7 +8,6 @@ import { colors } from '../Theme';
 const useStyles = makeStyles(() =>
   createStyles({
     span: {
-      display: 'inline-block',
       textDecoration: 'underline',
       cursor: 'pointer',
     },
@@ -29,27 +28,18 @@ export const LyricSpan = ({ child }: any) => {
 
   const classes = useStyles();
 
-  const [isSelected, setIsSelected] = useState(false);
+  const isSelected = selectedLyric === lyric; // is true for instances of word that were not clicked on
 
   const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
   const handleClick = async () => {
-    setSelectedLyric(lyric);
-
     const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
 
+    setSelectedLyric(lyric);
     setRhymes(rhymes);
     setSynonyms(synonyms);
     setRelatedWords(relatedWords);
   };
-
-  useEffect(() => {
-    if (selectedLyric === lyric) {
-      setIsSelected(true);
-    } else {
-      setIsSelected(false);
-    }
-  }, [selectedLyric]);
 
   return (
     <span data-custom-type="lyric" onClick={handleClick} className={className}>
