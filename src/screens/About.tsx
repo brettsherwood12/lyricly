@@ -14,6 +14,13 @@ const boxSx = {
   justifyContent: 'space-between',
 };
 
+const linkSx = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '4px',
+  width: 'max-content',
+};
+
 export const About = () => {
   const { setScreen } = useContext(Context);
 
@@ -48,22 +55,25 @@ export const About = () => {
           </Typography>
         </Box>
         <Box>
-          <Link href="#" onClick={(event) => handleClick(event, Screen.HOME)}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <ArrowBackIcon fontSize="small" sx={{ mt: 0.25 }} />
-              <Typography>back to lyric.ly</Typography>
-            </Box>
+          <Link
+            href="#"
+            underline="hover"
+            onClick={(event) => handleClick(event, Screen.HOME)}
+            sx={linkSx}
+          >
+            <ArrowBackIcon fontSize="small" sx={{ mt: 0.25 }} />
+            <Typography>back to lyric.ly</Typography>
           </Link>
         </Box>
       </Box>
       <Box pb={4}>
         <Typography>
           A special thanks to{' '}
-          <Link href="https://www.datamuse.com/api/" target="blank">
+          <Link href="https://www.datamuse.com/api/" underline="hover" target="blank">
             Datamuse
           </Link>
           , the API which is used for fetching word data, and to{' '}
-          <Link href="https://docs.slatejs.org/" target="blank">
+          <Link href="https://docs.slatejs.org/" underline="hover" target="blank">
             Slate
           </Link>
           , the javascript library on which the text editor is built.
