@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { Box } from '@mui/material';
-import { createEditor, Transforms } from 'slate';
+import { createEditor, Transforms, Path } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
@@ -38,10 +38,6 @@ const editorStyle = {
   maxHeight: `calc(100vh - ${heightDiff}px)`,
 };
 
-const SpaceSpan = ({ child }: any) => {
-  return <span data-custom-type="space">{child}</span>;
-};
-
 export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
@@ -59,7 +55,7 @@ export const Lyrics = () => {
             if (customType === CustomType.LYRIC) {
               return <LyricSpan key={index} child={child} />;
             } else if (customType === CustomType.SPACE) {
-              return <SpaceSpan key={index} child={child} />;
+              return <span data-custom-type="space">{child}</span>;
             }
 
             return <span key={index}>{child}</span>;
