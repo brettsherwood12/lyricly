@@ -33,12 +33,14 @@ export const LyricSpan = ({ child }: any) => {
   const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
   const handleClick = async () => {
-    const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
+    if (lyric.length <= 45) {
+      const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
 
-    setSelectedLyric(lyric);
-    setRhymes(rhymes);
-    setSynonyms(synonyms);
-    setRelatedWords(relatedWords);
+      setSelectedLyric(lyric);
+      setRhymes(rhymes);
+      setSynonyms(synonyms);
+      setRelatedWords(relatedWords);
+    }
   };
 
   return (
