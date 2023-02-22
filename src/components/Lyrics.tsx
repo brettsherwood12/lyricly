@@ -67,15 +67,7 @@ export const Lyrics = () => {
   }, []);
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    const { key } = event;
-
-    const isSpaceKey = key === Key.SPACE;
-    const isEnterKey = key === Key.ENTER;
-
-    if (isSpaceKey || isEnterKey) {
-      event.preventDefault();
-      console.log(editor);
-    }
+    console.log(event);
   };
 
   const handlePaste = (event: ClipboardEvent) => {
