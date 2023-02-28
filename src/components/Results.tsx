@@ -74,7 +74,14 @@ export const Results = () => {
           ) : (
             rhymes.map((rhyme, index) => {
               const isLast = index === rhymes.length - 1 ? true : false;
-              return <ResultSpan type={DataType.RHYMES} result={rhyme} isLast={isLast} />;
+              return (
+                <ResultSpan
+                  type={DataType.RHYMES}
+                  result={rhyme}
+                  isLast={isLast}
+                  key={`rhyme-${index}`}
+                />
+              );
             })
           )}
         </TabPanel>
@@ -84,7 +91,14 @@ export const Results = () => {
           ) : (
             synonyms.map((synonym, index) => {
               const isLast = index === rhymes.length - 1 ? true : false;
-              return <ResultSpan type={DataType.SYNONYMS} result={synonym} isLast={isLast} />;
+              return (
+                <ResultSpan
+                  type={DataType.SYNONYMS}
+                  result={synonym}
+                  isLast={isLast}
+                  key={`synonym-${index}`}
+                />
+              );
             })
           )}
         </TabPanel>
@@ -95,7 +109,12 @@ export const Results = () => {
             relatedWords.map((relatedWord, index) => {
               const isLast = index === rhymes.length - 1 ? true : false;
               return (
-                <ResultSpan type={DataType.RELATED_WORDS} result={relatedWord} isLast={isLast} />
+                <ResultSpan
+                  type={DataType.RELATED_WORDS}
+                  result={relatedWord}
+                  isLast={isLast}
+                  key={`related-word-${index}`}
+                />
               );
             })
           )}

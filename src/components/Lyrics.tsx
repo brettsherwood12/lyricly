@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { Box } from '@mui/material';
-import { createEditor, Transforms, Path } from 'slate';
+import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
@@ -27,7 +27,7 @@ const PLACEHOLDER_TEXT = 'Type or paste lyrics here...';
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
-    children: [{ text: '', customType: CustomType.INIT }],
+    children: [{ text: '' }],
   },
 ];
 
@@ -53,12 +53,16 @@ export const Lyrics = () => {
             const { customType } = element.children[index];
 
             if (customType === CustomType.LYRIC) {
-              return <LyricSpan key={index} child={child} />;
+              return <LyricSpan child={child} key={`element-${index}`} />;
             } else if (customType === CustomType.SPACE) {
-              return <span data-custom-type="space">{child}</span>;
+              return (
+                <span data-custom-type="space" key={`element-${index}`}>
+                  {child}
+                </span>
+              );
             }
 
-            return <span key={index}>{child}</span>;
+            return <span key={`element-${index}`}>{child}</span>;
           })}
         </span>
         <br />
@@ -67,7 +71,30 @@ export const Lyrics = () => {
   }, []);
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    console.log(event);
+    const { key } = event;
+
+    const isSpaceKey = key === Key.SPACE;
+    const isEnterKey = key === Key.ENTER;
+
+    if (isSpaceKey || isEnterKey) {
+      const { selection } = editor;
+
+      if (selection) {
+        event.preventDefault();
+
+        Transforms.setNodes(
+          editor,
+          { customType: CustomType.LYRIC },
+          { at: selection.anchor.path },
+        );
+
+        if (isSpaceKey) {
+          Transforms.insertNodes(editor, [{ text: ' ', customType: CustomType.SPACE }]);
+        } else {
+          Transforms.insertNodes(editor, [{ type: 'paragraph', children: [{ text: '' }] }]);
+        }
+      }
+    }
   };
 
   const handlePaste = (event: ClipboardEvent) => {
