@@ -34,7 +34,6 @@ export const LyricSpan = ({ child }: any) => {
   const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
   const handleMouseEnter = async () => {
-    console.log('mous');
     if (lyric.length <= 45) {
       const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
 
