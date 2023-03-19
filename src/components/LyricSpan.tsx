@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
+import { debounce } from 'lodash';
 import { makeStyles, createStyles } from '@mui/styles';
 
 import { Context } from '../App';
@@ -32,7 +33,8 @@ export const LyricSpan = ({ child }: any) => {
 
   const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
-  const handleClick = async () => {
+  const handleMouseEnter = async () => {
+    console.log('mous');
     if (lyric.length <= 45) {
       const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
 
@@ -44,7 +46,7 @@ export const LyricSpan = ({ child }: any) => {
   };
 
   return (
-    <span data-custom-type="lyric" onClick={handleClick} className={className}>
+    <span data-custom-type="lyric" onMouseEnter={handleMouseEnter} className={className}>
       {child}
     </span>
   );
