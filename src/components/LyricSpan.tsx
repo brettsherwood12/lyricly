@@ -16,7 +16,6 @@ const useStyles = makeStyles(() =>
       textDecoration: 'none',
       color: colors.white,
       backgroundColor: colors.highlight,
-      cursor: 'auto',
     },
   }),
 );

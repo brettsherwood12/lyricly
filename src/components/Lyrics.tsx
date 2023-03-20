@@ -131,6 +131,7 @@ export const Lyrics = () => {
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           style={editorStyle}
+          spellCheck={false}
         />
       </Slate>
     </Box>
