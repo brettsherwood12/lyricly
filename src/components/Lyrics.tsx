@@ -89,11 +89,11 @@ export const Lyrics = () => {
       const { path } = selection.anchor;
 
       // @ts-ignore
-      const anchorWord = editor.children[path[0]].children[path[1]];
+      const selectionWord = editor.children[path[0]].children[path[1]]; // maybe replace this with useSelection
 
-      if (anchorWord.text === '\x00') {
-        // if the selection is any empty node the default event will delete it,
-        // but not move cursor backwards, this additional delete will do so
+      if (selectionWord.text === '\x00') {
+        // if the selection is any empty node the default event will delete it but
+        // won't move the cursor backwards, this additional delete will does so
         editor.deleteBackward('character');
       }
     }
