@@ -71,22 +71,11 @@ export const Lyrics = () => {
     );
   }, []);
 
-  const handleWhitespaceKeydown = (selection: BaseRange, isSpace: boolean) => {
-    Transforms.setNodes(editor, { customType: CustomType.LYRIC }, { at: selection.anchor.path });
-
-    if (isSpace) {
-      Transforms.insertNodes(editor, [
-        { text: ' ', customType: CustomType.SPACE },
-        { text: '\u0000', customType: CustomType.INIT },
-      ]);
-    } else {
-      Transforms.insertNodes(editor, [{ type: 'paragraph', children: [{ text: '' }] }]);
-    }
-  };
-
   const handleKeyDown = (event: KeyboardEvent) => {
     const { key } = event;
 
+    const isBackspace = key === Key.BACKSPACE;
+    const isDelete = key === Key.DELETE;
     const isSpace = key === Key.SPACE;
     const isEnter = key === Key.ENTER;
 
@@ -96,9 +85,31 @@ export const Lyrics = () => {
       return;
     }
 
+    if (isBackspace || isDelete) {
+      const { path } = selection.anchor;
+
+      // @ts-ignore
+      const anchorWord = editor.children[path[0]].children[path[1]];
+
+      if (anchorWord.text === '\x00') {
+        // if the selection is any empty node the default event will delete it,
+        // but not move cursor backwards, this additional delete will do so
+        editor.deleteBackward('character');
+      }
+    }
+
     if (isSpace || isEnter) {
       event.preventDefault();
-      handleWhitespaceKeydown(selection, isSpace);
+      Transforms.setNodes(editor, { customType: CustomType.LYRIC }, { at: selection.anchor.path });
+
+      if (isSpace) {
+        Transforms.insertNodes(editor, [
+          { text: ' ', customType: CustomType.SPACE },
+          { text: '\u0000', customType: CustomType.INIT },
+        ]);
+      } else {
+        Transforms.insertNodes(editor, [{ type: 'paragraph', children: [{ text: '' }] }]);
+      }
     }
   };
 
