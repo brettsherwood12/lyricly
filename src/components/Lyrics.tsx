@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import React, { useState, useMemo, useCallback } from 'react';
 import { Box } from '@mui/material';
 import { createEditor, Transforms } from 'slate';
@@ -8,7 +9,7 @@ import { LyricSpan } from './LyricSpan';
 import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
 
 import type { ClipboardEvent, KeyboardEvent } from 'react';
-import type { BaseEditor, Descendant } from 'slate';
+import type { BaseEditor, Descendant, BaseRange } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
 
 type CustomText = { text: string; customType?: CustomType };
@@ -70,30 +71,34 @@ export const Lyrics = () => {
     );
   }, []);
 
+  const handleWhitespaceKeydown = (selection: BaseRange, isSpace: boolean) => {
+    Transforms.setNodes(editor, { customType: CustomType.LYRIC }, { at: selection.anchor.path });
+
+    if (isSpace) {
+      Transforms.insertNodes(editor, [
+        { text: ' ', customType: CustomType.SPACE },
+        { text: '\u0000', customType: CustomType.INIT },
+      ]);
+    } else {
+      Transforms.insertNodes(editor, [{ type: 'paragraph', children: [{ text: '' }] }]);
+    }
+  };
+
   const handleKeyDown = (event: KeyboardEvent) => {
     const { key } = event;
 
-    const isSpaceKey = key === Key.SPACE;
-    const isEnterKey = key === Key.ENTER;
+    const isSpace = key === Key.SPACE;
+    const isEnter = key === Key.ENTER;
 
-    if (isSpaceKey || isEnterKey) {
-      const { selection } = editor;
+    const { selection } = editor;
 
-      if (selection) {
-        event.preventDefault();
+    if (!selection) {
+      return;
+    }
 
-        Transforms.setNodes(
-          editor,
-          { customType: CustomType.LYRIC },
-          { at: selection.anchor.path },
-        );
-
-        if (isSpaceKey) {
-          Transforms.insertNodes(editor, [{ text: ' ', customType: CustomType.SPACE }]);
-        } else {
-          Transforms.insertNodes(editor, [{ type: 'paragraph', children: [{ text: '' }] }]);
-        }
-      }
+    if (isSpace || isEnter) {
+      event.preventDefault();
+      handleWhitespaceKeydown(selection, isSpace);
     }
   };
 
