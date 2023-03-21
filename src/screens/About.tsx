@@ -50,8 +50,8 @@ export const About = () => {
             instantly find rhymes, synonyms and related words for it.
           </Typography>
           <Typography gutterBottom>
-            The content of your lyrics is completely secure, as it never leave your web browser.
-            Only individual words are sent across the internet.
+            The content of your lyrics is completely secure, as they are saved to your web browser.
+            Only individual words are sent across the internet to gather word data.
           </Typography>
         </Box>
         <Box>

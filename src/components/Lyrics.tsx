@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
@@ -23,7 +24,6 @@ declare module 'slate' {
 }
 
 const EDITOR_PLACEHOLDER = 'Type or paste lyrics here...';
-const LAST_SAVED_PLACEHOLDER = 'xx/xx/xxxx xx:xx XX';
 
 const initialValue: Descendant[] = [
   {
@@ -38,13 +38,6 @@ const heightDiff = headerHeight + footerHeight + paddingHeight;
 const editorStyle = {
   height: '100%',
   maxHeight: `calc(100vh - ${heightDiff}px)`,
-};
-
-const boxSx = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
-  pb: 3,
 };
 
 export const Lyrics = () => {
@@ -188,8 +181,7 @@ export const Lyrics = () => {
     const json = localStorage.getItem('songs');
 
     if (json) {
-      const songs = JSON.parse(json);
-      const song = songs[0];
+      const song = JSON.parse(json)[0];
       const { saveDateTime, editorValue } = song;
 
       Transforms.insertNodes(editor, editorValue);
@@ -200,25 +192,8 @@ export const Lyrics = () => {
 
   return (
     <Box sx={{ height: '100%' }}>
-      <Box sx={boxSx}>
-        <Box sx={{ display: 'flex' }}>
-          <Box mr={1}>
-            <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-              Last Saved:{' '}
-              <strong>{lastSavedDateTime ? lastSavedDateTime : LAST_SAVED_PLACEHOLDER}</strong>
-            </Typography>
-          </Box>
-          {!!lastSavedDateTime && (
-            <Box>
-              <Typography variant="body2">
-                <Link onClick={handleDeleteButtonClick} sx={{ color: 'red', cursor: 'pointer' }}>
-                  Delete
-                </Link>
-              </Typography>
-            </Box>
-          )}
-        </Box>
-        <Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '60px', pb: 2 }}>
+        <Box pr={2}>
           <Button
             variant="contained"
             size="small"
@@ -228,6 +203,20 @@ export const Lyrics = () => {
             Save
           </Button>
         </Box>
+        {!!lastSavedDateTime && (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box pr={1}>
+              <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+                Saved {lastSavedDateTime}
+              </Typography>
+            </Box>
+            <Box pr={2}>
+              <IconButton onClick={handleDeleteButtonClick}>
+                <DeleteIcon fontSize="small" color="error" />
+              </IconButton>
+            </Box>
+          </Box>
+        )}
       </Box>
       <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
         <Editable
