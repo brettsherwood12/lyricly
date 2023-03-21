@@ -1,11 +1,10 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Box, Button, IconButton, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import { Box, Button } from '@mui/material';
 import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
+import { SavePopover } from './SavePopover';
 import { DeleteDialog } from './DeleteDialog';
 import { LoadDialog } from './LoadDialog';
 
@@ -224,23 +223,11 @@ export const Lyrics = () => {
             </Button>
           </Box>
           {!!lastSavedDateTime && (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Box pr={1}>
-                <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                  Saved {lastSavedDateTime}
-                </Typography>
-              </Box>
-              <Box pr={2}>
-                <IconButton onClick={() => setIsLoadDialogOpen(true)}>
-                  <FolderOpenIcon fontSize="small" color="primary" />
-                </IconButton>
-              </Box>
-              <Box pr={2}>
-                <IconButton onClick={() => setIsDeleteDialogOpen(true)}>
-                  <DeleteIcon fontSize="small" color="error" />
-                </IconButton>
-              </Box>
-            </Box>
+            <SavePopover
+              lastSavedDateTime={lastSavedDateTime}
+              setIsLoadDialogOpen={setIsLoadDialogOpen}
+              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+            />
           )}
         </Box>
         <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
