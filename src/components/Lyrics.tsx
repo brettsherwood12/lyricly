@@ -5,6 +5,7 @@ import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
+import { DeleteDialog } from './DeleteDialog';
 
 import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
 
@@ -45,6 +46,7 @@ export const Lyrics = () => {
 
   const [editorValue, setEditorValue] = useState(initialValue);
   const [lastSavedDateTime, setLastSavedDateTime] = useState<string>('');
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
 
   const renderElement = useCallback((props: RenderElementProps) => {
     const { children, element } = props;
@@ -113,7 +115,7 @@ export const Lyrics = () => {
       if (isSpace) {
         Transforms.insertNodes(editor, [
           { text: ' ', customType: CustomType.SPACE },
-          { text: '\u0000', customType: CustomType.INIT },
+          { text: '\u0000', customType: undefined },
         ]);
       } else {
         Transforms.insertNodes(editor, [{ type: 'paragraph', children: [{ text: '' }] }]);
@@ -172,9 +174,10 @@ export const Lyrics = () => {
     setLastSavedDateTime(nowDateTime);
   };
 
-  const handleDeleteButtonClick = () => {
+  const handleDelete = () => {
     localStorage.clear();
     setLastSavedDateTime('');
+    setIsDeleteDialogOpen(false);
   };
 
   useEffect(() => {
@@ -189,45 +192,52 @@ export const Lyrics = () => {
       setLastSavedDateTime(saveDateTime);
     }
   }, []);
-
+  console.log(editorValue);
   return (
-    <Box sx={{ height: '100%' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '60px', pb: 2 }}>
-        <Box pr={2}>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleSaveButtonClick}
-            sx={{ fontSize: '12px' }}
-          >
-            Save
-          </Button>
-        </Box>
-        {!!lastSavedDateTime && (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box pr={1}>
-              <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                Saved {lastSavedDateTime}
-              </Typography>
-            </Box>
-            <Box pr={2}>
-              <IconButton onClick={handleDeleteButtonClick}>
-                <DeleteIcon fontSize="small" color="error" />
-              </IconButton>
-            </Box>
+    <>
+      <Box sx={{ height: '100%' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '60px', pb: 2 }}>
+          <Box pr={2}>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={handleSaveButtonClick}
+              sx={{ fontSize: '12px' }}
+            >
+              Save
+            </Button>
           </Box>
-        )}
+          {!!lastSavedDateTime && (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box pr={1}>
+                <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+                  Saved {lastSavedDateTime}
+                </Typography>
+              </Box>
+              <Box pr={2}>
+                <IconButton onClick={() => setIsDeleteDialogOpen(true)}>
+                  <DeleteIcon fontSize="small" color="error" />
+                </IconButton>
+              </Box>
+            </Box>
+          )}
+        </Box>
+        <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
+          <Editable
+            placeholder={EDITOR_PLACEHOLDER}
+            renderElement={renderElement}
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
+            style={editorStyle}
+            spellCheck={false}
+          />
+        </Slate>
       </Box>
-      <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
-        <Editable
-          placeholder={EDITOR_PLACEHOLDER}
-          renderElement={renderElement}
-          onKeyDown={handleKeyDown}
-          onPaste={handlePaste}
-          style={editorStyle}
-          spellCheck={false}
-        />
-      </Slate>
-    </Box>
+      <DeleteDialog
+        isOpen={isDeleteDialogOpen}
+        setIsOpen={setIsDeleteDialogOpen}
+        handleDelete={handleDelete}
+      />
+    </>
   );
 };
