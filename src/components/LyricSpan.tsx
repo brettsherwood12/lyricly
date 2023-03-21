@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { debounce } from 'lodash';
 import { makeStyles, createStyles } from '@mui/styles';
 
 import { Context } from '../App';

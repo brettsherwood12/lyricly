@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash';
 import React, { useState, useMemo, useCallback } from 'react';
 import { Box } from '@mui/material';
 import { createEditor, Transforms } from 'slate';

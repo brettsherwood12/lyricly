@@ -41,17 +41,17 @@ export const About = () => {
             lyrics.
           </Typography>
           <Typography gutterBottom>
-            No more fumbling around with word documents, endless Google searches, and multiple tabs.
-            Get everything you need in one place so that you can better focus on the most important
-            thing, writing your song.
+            No more fumbling around with multiple windows, endless Google searches, a rhyme website
+            for this and a thesaurus website for that. Put everything you need in one place so that
+            you can better focus on the most important thing, writing your song.
           </Typography>
           <Typography gutterBottom>
-            Just click on a lyric in the text editor and <strong>lyric.ly</strong> will instantly
-            find rhymes, synonyms and related words for it.
+            Just click on one of your lyric in the text editor and <strong>lyric.ly</strong> will
+            instantly find rhymes, synonyms and related words for it.
           </Typography>
           <Typography gutterBottom>
-            Your lyrics are totally secure, as they never leave your web browser. Only individual
-            words are sent across the internet.
+            The content of your lyrics is completely secure, as it never leave your web browser.
+            Only individual words are sent across the internet.
           </Typography>
         </Box>
         <Box>
@@ -76,7 +76,7 @@ export const About = () => {
           <Link href="https://docs.slatejs.org/" underline="hover" target="blank">
             Slate
           </Link>
-          , the javascript library on which the text editor is built.
+          , the open source library on which the text editor is built.
         </Typography>
       </Box>
     </Box>
