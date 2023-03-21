@@ -89,17 +89,23 @@ export const Lyrics = () => {
       const { path } = selection.anchor;
 
       // @ts-ignore
-      const selectionWord = editor.children[path[0]].children[path[1]]; // maybe replace this with useSelection
+      const selectionWord = editor.children[path[0]].children[path[1]];
+
+      if (selectionWord.customType === CustomType.LYRIC) {
+        // if deleting characters of a <LyricSpan /> turn it back into normal text
+        Transforms.setNodes(editor, { customType: undefined }, { at: selection.anchor.path });
+      }
 
       if (selectionWord.text === '\x00') {
         // if the selection is any empty node the default event will delete it but
-        // won't move the cursor backwards, this additional delete will does so
+        // won't move the cursor backwards, this additional delete then does so
         editor.deleteBackward('character');
       }
     }
 
     if (isSpace || isEnter) {
       event.preventDefault();
+
       Transforms.setNodes(editor, { customType: CustomType.LYRIC }, { at: selection.anchor.path });
 
       if (isSpace) {
