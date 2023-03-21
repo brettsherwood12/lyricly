@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { Box } from '@mui/material';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
@@ -22,7 +22,8 @@ declare module 'slate' {
   }
 }
 
-const PLACEHOLDER_TEXT = 'Type or paste lyrics here...';
+const EDITOR_PLACEHOLDER = 'Type or paste lyrics here...';
+const LAST_SAVED_PLACEHOLDER = 'xx/xx/xxxx xx:xx XX';
 
 const initialValue: Descendant[] = [
   {
@@ -39,10 +40,18 @@ const editorStyle = {
   maxHeight: `calc(100vh - ${heightDiff}px)`,
 };
 
+const boxSx = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'flex-end',
+  pb: 3,
+};
+
 export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [editorValue, setEditorValue] = useState(initialValue);
+  const [lastSavedDateTime, setLastSavedDateTime] = useState<string>('');
 
   const renderElement = useCallback((props: RenderElementProps) => {
     const { children, element } = props;
@@ -148,11 +157,81 @@ export const Lyrics = () => {
     Transforms.insertNodes(editor, nodes);
   };
 
+  const handleSaveButtonClick = () => {
+    const now = Date.now();
+    const nowDateTime = new Date(now).toLocaleString([], {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    // use array so that multiple songs can be saved in future
+    const songs = [
+      {
+        saveDateTime: nowDateTime,
+        editorValue,
+      },
+    ];
+
+    localStorage.setItem('songs', JSON.stringify(songs));
+    setLastSavedDateTime(nowDateTime);
+  };
+
+  const handleDeleteButtonClick = () => {
+    localStorage.clear();
+    setLastSavedDateTime('');
+  };
+
+  useEffect(() => {
+    const json = localStorage.getItem('songs');
+
+    if (json) {
+      const songs = JSON.parse(json);
+      const song = songs[0];
+      const { saveDateTime, editorValue } = song;
+
+      Transforms.insertNodes(editor, editorValue);
+
+      setLastSavedDateTime(saveDateTime);
+    }
+  }, []);
+
   return (
     <Box sx={{ height: '100%' }}>
+      <Box sx={boxSx}>
+        <Box sx={{ display: 'flex' }}>
+          <Box mr={1}>
+            <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+              Last Saved:{' '}
+              <strong>{lastSavedDateTime ? lastSavedDateTime : LAST_SAVED_PLACEHOLDER}</strong>
+            </Typography>
+          </Box>
+          {!!lastSavedDateTime && (
+            <Box>
+              <Typography variant="body2">
+                <Link onClick={handleDeleteButtonClick} sx={{ color: 'red', cursor: 'pointer' }}>
+                  Delete
+                </Link>
+              </Typography>
+            </Box>
+          )}
+        </Box>
+        <Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSaveButtonClick}
+            sx={{ fontSize: '12px' }}
+          >
+            Save
+          </Button>
+        </Box>
+      </Box>
       <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
         <Editable
-          placeholder={PLACEHOLDER_TEXT}
+          placeholder={EDITOR_PLACEHOLDER}
           renderElement={renderElement}
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
