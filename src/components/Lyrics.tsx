@@ -28,6 +28,7 @@ const initialValue: Descendant[] = [
   {
     type: 'paragraph',
     children: [{ text: '' }],
+    customType: CustomType.INIT,
   },
 ];
 
@@ -132,6 +133,10 @@ export const Lyrics = () => {
           nodes[lineIndex].children.push({ text: ' ', customType: CustomType.SPACE });
         }
       });
+    });
+
+    Transforms.removeNodes(editor, {
+      match: (node: any) => node.customType === CustomType.INIT,
     });
 
     Transforms.insertNodes(editor, nodes);
