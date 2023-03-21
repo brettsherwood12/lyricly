@@ -1,11 +1,13 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
 import { DeleteDialog } from './DeleteDialog';
+import { LoadDialog } from './LoadDialog';
 
 import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
 
@@ -47,6 +49,7 @@ export const Lyrics = () => {
   const [editorValue, setEditorValue] = useState(initialValue);
   const [lastSavedDateTime, setLastSavedDateTime] = useState<string>('');
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
+  const [isLoadDialogOpen, setIsLoadDialogOpen] = useState<boolean>(false);
 
   const renderElement = useCallback((props: RenderElementProps) => {
     const { children, element } = props;
@@ -174,25 +177,38 @@ export const Lyrics = () => {
     setLastSavedDateTime(nowDateTime);
   };
 
-  const handleDelete = () => {
-    localStorage.clear();
-    setLastSavedDateTime('');
-    setIsDeleteDialogOpen(false);
-  };
-
-  useEffect(() => {
+  const getSavedLyricsAndSetToState = () => {
     const json = localStorage.getItem('songs');
 
     if (json) {
       const song = JSON.parse(json)[0];
       const { saveDateTime, editorValue } = song;
 
+      Transforms.removeNodes(editor, {
+        match: (node: any) => (node.customType === CustomType.INIT ? true : false),
+      });
+
       Transforms.insertNodes(editor, editorValue);
 
       setLastSavedDateTime(saveDateTime);
     }
+  };
+
+  const handleDelete = () => {
+    localStorage.clear();
+    setLastSavedDateTime('');
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleLoad = () => {
+    getSavedLyricsAndSetToState();
+    setIsLoadDialogOpen(false);
+  };
+
+  useEffect(() => {
+    getSavedLyricsAndSetToState();
   }, []);
-  console.log(editorValue);
+
   return (
     <>
       <Box sx={{ height: '100%' }}>
@@ -213,6 +229,11 @@ export const Lyrics = () => {
                 <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
                   Saved {lastSavedDateTime}
                 </Typography>
+              </Box>
+              <Box pr={2}>
+                <IconButton onClick={() => setIsLoadDialogOpen(true)}>
+                  <FolderOpenIcon fontSize="small" color="primary" />
+                </IconButton>
               </Box>
               <Box pr={2}>
                 <IconButton onClick={() => setIsDeleteDialogOpen(true)}>
@@ -237,6 +258,11 @@ export const Lyrics = () => {
         isOpen={isDeleteDialogOpen}
         setIsOpen={setIsDeleteDialogOpen}
         handleDelete={handleDelete}
+      />
+      <LoadDialog
+        isOpen={isLoadDialogOpen}
+        setIsOpen={setIsLoadDialogOpen}
+        handleLoad={handleLoad}
       />
     </>
   );
