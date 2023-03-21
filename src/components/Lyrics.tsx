@@ -8,7 +8,7 @@ import { LyricSpan } from './LyricSpan';
 import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
 
 import type { ClipboardEvent, KeyboardEvent } from 'react';
-import type { BaseEditor, Descendant, BaseRange } from 'slate';
+import type { BaseEditor, Descendant } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
 
 type CustomText = { text: string; customType?: CustomType };
