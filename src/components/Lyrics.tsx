@@ -168,7 +168,7 @@ export const Lyrics = () => {
     const songs = [
       {
         saveDateTime: nowDateTime,
-        editorValue,
+        saveEditorValue: editorValue,
       },
     ];
 
@@ -181,13 +181,13 @@ export const Lyrics = () => {
 
     if (json) {
       const song = JSON.parse(json)[0];
-      const { saveDateTime, editorValue } = song;
+      const { saveDateTime, saveEditorValue } = song;
 
       Transforms.removeNodes(editor, {
         match: (node: any) => (node.customType === CustomType.INIT ? true : false),
       });
 
-      Transforms.insertNodes(editor, editorValue);
+      Transforms.insertNodes(editor, saveEditorValue);
 
       setLastSavedDateTime(saveDateTime);
     }
