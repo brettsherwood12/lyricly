@@ -5,14 +5,23 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
 import type { Dispatch, PointerEvent, SetStateAction } from 'react';
 
+const localeStringOptions: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+};
+
 interface Props {
-  lastSavedDateTime: string;
+  savedDateTime: number;
   setIsLoadDialogOpen: Dispatch<SetStateAction<boolean>>;
   setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const SavePopover = (props: Props) => {
-  const { lastSavedDateTime, setIsLoadDialogOpen, setIsDeleteDialogOpen } = props;
+  const { savedDateTime, setIsLoadDialogOpen, setIsDeleteDialogOpen } = props;
+  const savedDateTimeString = new Date(savedDateTime).toLocaleString([], localeStringOptions);
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -34,7 +43,7 @@ export const SavePopover = (props: Props) => {
     <Box>
       <Link component="button" underline="always" onClick={handleOpenClick}>
         <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-          Saved {lastSavedDateTime}
+          Saved {savedDateTimeString}
         </Typography>
       </Link>
       <Popover

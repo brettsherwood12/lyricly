@@ -46,7 +46,7 @@ export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [editorValue, setEditorValue] = useState(initialValue);
-  const [lastSavedDateTime, setLastSavedDateTime] = useState<string>('');
+  const [savedDateTime, setSavedDateTime] = useState<number | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
   const [isLoadDialogOpen, setIsLoadDialogOpen] = useState<boolean>(false);
 
@@ -156,24 +156,16 @@ export const Lyrics = () => {
 
   const handleSaveButtonClick = () => {
     const now = Date.now();
-    const nowDateTime = new Date(now).toLocaleString([], {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-
     // use array so that multiple songs can be saved in future
     const songs = [
       {
-        saveDateTime: nowDateTime,
+        saveDateTime: now,
         saveEditorValue: editorValue,
       },
     ];
 
     localStorage.setItem('songs', JSON.stringify(songs));
-    setLastSavedDateTime(nowDateTime);
+    setSavedDateTime(now);
   };
 
   const getSavedLyricsAndSetToState = () => {
@@ -189,13 +181,14 @@ export const Lyrics = () => {
 
       Transforms.insertNodes(editor, saveEditorValue);
 
-      setLastSavedDateTime(saveDateTime);
+      setSavedDateTime(saveDateTime);
     }
   };
 
   const handleDelete = () => {
     localStorage.clear();
-    setLastSavedDateTime('');
+
+    setSavedDateTime(null);
     setIsDeleteDialogOpen(false);
   };
 
@@ -222,9 +215,9 @@ export const Lyrics = () => {
               Save
             </Button>
           </Box>
-          {!!lastSavedDateTime && (
+          {!!savedDateTime && (
             <SavePopover
-              lastSavedDateTime={lastSavedDateTime}
+              savedDateTime={savedDateTime}
               setIsLoadDialogOpen={setIsLoadDialogOpen}
               setIsDeleteDialogOpen={setIsDeleteDialogOpen}
             />
