@@ -20,7 +20,8 @@ const useStyles = makeStyles(() =>
 );
 
 export const LyricSpan = ({ child }: any) => {
-  const lyric = child.props.text.text.replace(/[^A-Za-z']/g, ''); // remove non-alphabetic chars
+  const { text }: { text: string } = child.props.text;
+  const lyric = text.toLowerCase().replace(/[^A-Za-z']/g, ''); // remove non-alphabetic chars
 
   const { selectedLyric, setSelectedLyric, setRhymes, setSynonyms, setRelatedWords } =
     useContext(Context);
