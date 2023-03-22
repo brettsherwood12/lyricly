@@ -30,7 +30,7 @@ const EDITOR_PLACEHOLDER = 'Type or paste lyrics here...';
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
-    children: [{ text: '' }],
+    children: [{ text: '\x00' }],
     customType: CustomType.INIT,
   },
 ];
@@ -117,7 +117,7 @@ export const Lyrics = () => {
       if (isSpace) {
         Transforms.insertNodes(editor, [
           { text: ' ', customType: CustomType.SPACE },
-          { text: '\u0000', customType: undefined },
+          { text: '\x00', customType: undefined },
         ]);
       } else {
         Transforms.insertNodes(editor, [{ type: 'paragraph', children: [{ text: '' }] }]);
@@ -139,7 +139,7 @@ export const Lyrics = () => {
       const words = line.split(' ');
 
       words.forEach((word, wordIndex) => {
-        nodes[lineIndex].children.push({ text: word, customType: CustomType.LYRIC });
+        nodes[lineIndex].children.push({ text: `\x00${word}`, customType: CustomType.LYRIC });
 
         if (wordIndex < words.length - 1) {
           nodes[lineIndex].children.push({ text: ' ', customType: CustomType.SPACE });
