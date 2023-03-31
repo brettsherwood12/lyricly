@@ -62,28 +62,30 @@ export const Results = () => {
           </Typography>
         )}
       </Box>
-      <Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Rhymes" />
           <Tab label="Synonyms" />
           <Tab label="Related Words" />
         </Tabs>
         <TabPanel value={value} index={0}>
-          {hasNoRhymes ? (
-            <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />
-          ) : (
-            rhymes.map((rhyme, index) => {
-              const isLast = index === rhymes.length - 1 ? true : false;
-              return (
-                <ResultSpan
-                  type={DataType.RHYMES}
-                  result={rhyme}
-                  isLast={isLast}
-                  key={`rhyme-${index}`}
-                />
-              );
-            })
-          )}
+          <Box sx={{ maxHeight: '30%', overflow: 'auto' }}>
+            {hasNoRhymes ? (
+              <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />
+            ) : (
+              rhymes.map((rhyme, index) => {
+                const isLast = index === rhymes.length - 1 ? true : false;
+                return (
+                  <ResultSpan
+                    type={DataType.RHYMES}
+                    result={rhyme}
+                    isLast={isLast}
+                    key={`rhyme-${index}`}
+                  />
+                );
+              })
+            )}
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
           {hasNoSynonyms ? (
