@@ -1,5 +1,5 @@
 import React, { useState, createContext } from 'react';
-import { Box, ThemeProvider } from '@mui/material';
+import { Box, Collapse, Hidden, ThemeProvider } from '@mui/material';
 
 import { Home } from './screens/Home';
 import { About } from './screens/About';
@@ -7,7 +7,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 
 import { theme } from './Theme';
-import { DataType, footerHeight, headerHeight, Screen } from './Constants';
+import { DataType, Screen } from './Constants';
 import type { ContextValue, DataPoint } from './Types';
 
 const initialContextValue: ContextValue = {
@@ -55,10 +55,19 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Context.Provider value={contextValue}>
-        <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Box
+          sx={{
+            height: '100vh',
+            minWidth: '320px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
           <Header />
           <Box sx={{ height: '100%', px: '24px' }}>{(isAboutScreen && <About />) || <Home />}</Box>
-          <Footer />
+          <Hidden smDown>
+            <Footer />
+          </Hidden>
         </Box>
       </Context.Provider>
     </ThemeProvider>

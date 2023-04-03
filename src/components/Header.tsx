@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import type { MouseEvent } from 'react';
-import { Box, Link, Divider, Typography } from '@mui/material';
+import { Box, Link, Divider, Hidden, Typography } from '@mui/material';
 import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 
 import { Context } from '../App';
@@ -15,7 +15,10 @@ const boxSx = {
 };
 
 export const Header = () => {
-  const { setScreen } = useContext(Context);
+  const { screen, setScreen } = useContext(Context);
+
+  const isHomeScreen = screen === Screen.HOME;
+  const isAboutScreen = screen === Screen.ABOUT;
 
   const handleClick = (event: MouseEvent, screen: Screen) => {
     event.preventDefault();
@@ -25,16 +28,42 @@ export const Header = () => {
   return (
     <Box>
       <Box sx={boxSx}>
-        <Link
-          component="button"
-          underline="none"
-          onClick={(event) => handleClick(event, Screen.HOME)}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <QueueMusicIcon fontSize="large" sx={{ mt: 0.5 }} />
-            <Typography variant="h5">lyric.ly</Typography>
+        <Box>
+          <Link
+            component="button"
+            underline="none"
+            onClick={(event) => handleClick(event, Screen.HOME)}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <QueueMusicIcon fontSize="large" sx={{ mt: 0.5 }} />
+              <Typography variant="h5">lyric.ly</Typography>
+            </Box>
+          </Link>
+        </Box>
+        <Hidden smUp>
+          <Box sx={{ display: 'flex' }}>
+            <Box pr={3}>
+              <Link
+                component="button"
+                underline="hover"
+                onClick={(event) => handleClick(event, Screen.HOME)}
+                disabled={isHomeScreen}
+              >
+                <Typography variant="body2">lyric.ly</Typography>
+              </Link>
+            </Box>
+            <Box pr={3}>
+              <Link
+                component="button"
+                underline="hover"
+                onClick={(event) => handleClick(event, Screen.ABOUT)}
+                disabled={isAboutScreen}
+              >
+                <Typography variant="body2">about</Typography>
+              </Link>
+            </Box>
           </Box>
-        </Link>
+        </Hidden>
       </Box>
       <Divider />
     </Box>

@@ -69,7 +69,6 @@ export const Results = () => {
           <Tab label="Related Words" />
         </Tabs>
         <TabPanel value={value} index={0}>
-          {/* need to prevent content overflow here */}
           <Box>
             {hasNoRhymes ? (
               <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />

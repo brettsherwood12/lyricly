@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import type { MouseEvent } from 'react';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Hidden, Link, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { Context } from '../App';
 import { Screen } from '../Constants';
+
+const year = new Date().getFullYear();
 
 const boxSx = {
   height: '100%',
@@ -67,17 +69,29 @@ export const About = () => {
         </Box>
       </Box>
       <Box pb={4}>
-        <Typography>
-          A special thanks to{' '}
-          <Link href="https://www.datamuse.com/api/" underline="hover" target="blank">
-            Datamuse
-          </Link>
-          , the API which is used for fetching word data, and to{' '}
-          <Link href="https://docs.slatejs.org/" underline="hover" target="blank">
-            Slate
-          </Link>
-          , the open source library on which the text editor is built.
-        </Typography>
+        <Box pb={2}>
+          <Typography>
+            A special thanks to{' '}
+            <Link href="https://www.datamuse.com/api/" underline="hover" target="blank">
+              Datamuse
+            </Link>
+            , the API which is used for fetching word data, and to{' '}
+            <Link href="https://docs.slatejs.org/" underline="hover" target="blank">
+              Slate
+            </Link>
+            , the open source library on which the text editor is built.
+          </Typography>
+        </Box>
+        <Hidden smUp>
+          <Box>
+            <Typography variant="body2">
+              &copy; {year}{' '}
+              <Link href="https://github.com/clockmakerbrett" target="blank" underline="hover">
+                Brett Sherwood
+              </Link>{' '}
+            </Typography>
+          </Box>
+        </Hidden>
       </Box>
     </Box>
   );
