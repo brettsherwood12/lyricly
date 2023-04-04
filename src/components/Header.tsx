@@ -40,7 +40,7 @@ export const Header = () => {
             </Box>
           </Link>
         </Box>
-        <Hidden mdDown>
+        <Hidden mdUp>
           <Box sx={{ display: 'flex' }}>
             <Box pr={3}>
               <Link

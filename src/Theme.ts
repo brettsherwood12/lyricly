@@ -6,7 +6,12 @@ export const colors = {
   highlight: '#1976d2',
 };
 
-export const theme = createTheme({
+const defaultTheme = createTheme();
+
+const { breakpoints } = defaultTheme;
+
+export const theme = {
+  ...defaultTheme,
   components: {
     MuiLink: {
       styleOverrides: {
@@ -18,5 +23,23 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        h6: {
+          [breakpoints.down('md')]: {
+            fontSize: '16px',
+          },
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          [breakpoints.down('md')]: {
+            fontSize: '12px',
+          },
+        },
+      },
+    },
   },
-});
+};
