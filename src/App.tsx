@@ -64,8 +64,10 @@ function App() {
           }}
         >
           <Header />
-          <Box sx={{ height: '100%', px: '24px' }}>{(isAboutScreen && <About />) || <Home />}</Box>
-          <Hidden smDown>
+          <Box sx={{ height: '100%', px: { xs: '12px', sm: '12px', md: '24px' } }}>
+            {(isAboutScreen && <About />) || <Home />}
+          </Box>
+          <Hidden mdDown>
             <Footer />
           </Hidden>
         </Box>

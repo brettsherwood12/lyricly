@@ -52,7 +52,7 @@ export const Results = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ fontSize: { sm: '8px' } }}>
       <Box>
         {hasSelectedLyric ? (
           <Typography variant="h6">'{selectedLyric}'</Typography>
