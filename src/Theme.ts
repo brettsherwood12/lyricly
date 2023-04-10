@@ -1,5 +1,7 @@
 import { createTheme } from '@mui/material';
 
+import type { Theme } from '@mui/material';
+
 export const colors = {
   white: '#FFFFFF',
   disabled: 'rgba(0, 0, 0, 0.26)',
@@ -10,7 +12,7 @@ const defaultTheme = createTheme();
 
 const { breakpoints } = defaultTheme;
 
-export const theme = {
+export const theme: Theme = {
   ...defaultTheme,
   components: {
     MuiLink: {

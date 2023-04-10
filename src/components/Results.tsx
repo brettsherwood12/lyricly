@@ -52,7 +52,7 @@ export const Results = () => {
   };
 
   return (
-    <Box sx={{ fontSize: { sm: '8px' } }}>
+    <Box>
       <Box>
         {hasSelectedLyric ? (
           <Typography variant="h6">'{selectedLyric}'</Typography>
@@ -69,57 +69,38 @@ export const Results = () => {
           <Tab label="Related Words" />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <Box>
+          <Box sx={{ fontSize: { xs: '12px', sm: '12px', md: '16px' } }}>
             {hasNoRhymes ? (
               <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />
             ) : (
               rhymes.map((rhyme, index) => {
                 const isLast = index === rhymes.length - 1 ? true : false;
-                return (
-                  <ResultSpan
-                    type={DataType.RHYMES}
-                    result={rhyme}
-                    isLast={isLast}
-                    key={`rhyme-${index}`}
-                  />
-                );
+                return <ResultSpan key={`rhyme-${index}`} result={rhyme} isLast={isLast} />;
               })
             )}
           </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Box>
+          <Box sx={{ fontSize: { xs: '12px', sm: '12px', md: '16px' } }}>
             {hasNoSynonyms ? (
               <NoDataMessage type={DataType.SYNONYMS} lyric={selectedLyric} />
             ) : (
               synonyms.map((synonym, index) => {
                 const isLast = index === rhymes.length - 1 ? true : false;
-                return (
-                  <ResultSpan
-                    type={DataType.SYNONYMS}
-                    result={synonym}
-                    isLast={isLast}
-                    key={`synonym-${index}`}
-                  />
-                );
+                return <ResultSpan key={`synonym-${index}`} result={synonym} isLast={isLast} />;
               })
             )}
           </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Box>
+          <Box sx={{ fontSize: { xs: '12px', sm: '12px', md: '16px' } }}>
             {hasNoRelatedWords ? (
               <NoDataMessage type={DataType.RELATED_WORDS} lyric={selectedLyric} />
             ) : (
               relatedWords.map((relatedWord, index) => {
                 const isLast = index === rhymes.length - 1 ? true : false;
                 return (
-                  <ResultSpan
-                    type={DataType.RELATED_WORDS}
-                    result={relatedWord}
-                    isLast={isLast}
-                    key={`related-word-${index}`}
-                  />
+                  <ResultSpan key={`related-word-${index}`} result={relatedWord} isLast={isLast} />
                 );
               })
             )}
