@@ -36,7 +36,7 @@ export const Header = () => {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <QueueMusicIcon fontSize="large" sx={{ mt: 0.5 }} />
-              <Typography variant="h5">lyric.ly</Typography>
+              <Typography variant="h5">lyricly</Typography>
             </Box>
           </Link>
         </Box>
@@ -49,7 +49,7 @@ export const Header = () => {
                 onClick={(event) => handleClick(event, Screen.HOME)}
                 disabled={isHomeScreen}
               >
-                <Typography variant="body2">lyric.ly</Typography>
+                <Typography variant="body2">lyricly</Typography>
               </Link>
             </Box>
             <Box pr={3}>

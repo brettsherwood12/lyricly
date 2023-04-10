@@ -48,7 +48,7 @@ export const About = () => {
             you can better focus on the most important thing, writing your song.
           </Typography>
           <Typography gutterBottom>
-            Just click on one of your lyric in the text editor and <strong>lyric.ly</strong> will
+            Just click on one of your lyrics in the text editor and <strong>lyricly</strong> will
             instantly find rhymes, synonyms and related words for it.
           </Typography>
           <Typography gutterBottom>

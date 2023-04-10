@@ -39,7 +39,7 @@ export const Footer = () => {
               onClick={(event) => handleClick(event, Screen.HOME)}
               disabled={isHomeScreen}
             >
-              <Typography variant="body2">lyric.ly</Typography>
+              <Typography variant="body2">lyricly</Typography>
             </Link>
           </Box>
           <Box pr={3}>
