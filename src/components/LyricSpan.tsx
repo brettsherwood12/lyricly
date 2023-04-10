@@ -32,7 +32,7 @@ export const LyricSpan = ({ child }: any) => {
 
   const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
-  const handleMouseEnter = async () => {
+  const handleClick = async () => {
     if (lyric.length <= 45) {
       const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
 
@@ -44,7 +44,7 @@ export const LyricSpan = ({ child }: any) => {
   };
 
   return (
-    <span data-custom-type="lyric" onMouseEnter={handleMouseEnter} className={className}>
+    <span data-custom-type="lyric" onClick={handleClick} className={className}>
       {child}
     </span>
   );
