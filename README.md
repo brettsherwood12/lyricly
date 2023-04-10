@@ -1,4 +1,4 @@
-# lyric.ly
+# lyricly
 
 A simple yet elegant tool to help songwriters find the words they need for their working lyrics.
 

@@ -64,7 +64,7 @@ export const About = () => {
             sx={linkSx}
           >
             <ArrowBackIcon fontSize="small" sx={{ mt: 0.25 }} />
-            <Typography>back to lyric.ly</Typography>
+            <Typography>back to lyricly</Typography>
           </Link>
         </Box>
       </Box>
