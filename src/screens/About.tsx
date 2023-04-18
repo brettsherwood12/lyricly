@@ -82,7 +82,7 @@ export const About = () => {
             , the open source library on which the text editor is built.
           </Typography>
         </Box>
-        <Hidden smUp>
+        <Hidden mdUp>
           <Box>
             <Typography variant="body2">
               &copy; {year}{' '}
