@@ -48,15 +48,11 @@ export const About = () => {
             you can better focus on the most important thing, writing your song.
           </Typography>
           <Typography gutterBottom>
-            Just click on one of your lyrics in the text editor and <strong>lyricly</strong> will
-            instantly find rhymes, synonyms and related words for it.
-          </Typography>
-          <Typography gutterBottom>
             The content of your lyrics is completely secure, as they never leave your web browser.
             Only individual words are sent across the internet to gather word data.
           </Typography>
         </Box>
-        <Box>
+        <Box pb={2}>
           <Link
             href="#"
             underline="hover"
