@@ -13,8 +13,10 @@ export const HelpDialog = ({ isOpen, setIsOpen }: Props) => {
   return (
     <Dialog open={isOpen}>
       <DialogContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', pb: 2 }}>
-          <Typography variant="h5">Help</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2 }}>
+          <Typography variant="h5" sx={{ pl: 6 }}>
+            Help
+          </Typography>
           <IconButton onClick={() => setIsOpen(false)}>
             <CloseIcon />
           </IconButton>
@@ -31,8 +33,8 @@ export const HelpDialog = ({ isOpen, setIsOpen }: Props) => {
             </Box>
             <Box sx={{ pb: 1 }}>
               <Typography ml={6}>
-                Words, separated by a spaces, will become interactive, and are indicated as such
-                with an <span style={{ textDecoration: 'underline' }}>underline</span>
+                Words, separated by a space, will become interactive, and are indicated as such with
+                an <span style={{ textDecoration: 'underline' }}>underline</span>
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', pb: 1 }}>

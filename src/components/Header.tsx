@@ -24,7 +24,7 @@ export const Header = () => {
 
   const [isHelpDialogOpen, setIsHelpDialogOpen] = useState<boolean>(false);
 
-  const handleHomeClick = (event: MouseEvent, screen: Screen) => {
+  const handleClick = (event: MouseEvent, screen: Screen) => {
     event.preventDefault();
     setScreen(screen);
   };
@@ -37,7 +37,7 @@ export const Header = () => {
             <Link
               component="button"
               underline="none"
-              onClick={(event) => handleHomeClick(event, Screen.HOME)}
+              onClick={(event) => handleClick(event, Screen.HOME)}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <QueueMusicIcon fontSize="large" sx={{ mt: 0.5 }} />
@@ -46,27 +46,39 @@ export const Header = () => {
             </Link>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box>
-              <Button
-                variant="contained"
-                onClick={() => setIsHelpDialogOpen(true)}
-                sx={{ borderRadius: '50%', p: 1.5, transform: 'scale(0.5)' }}
-              >
-                <QuestionMarkIcon fontSize="large" sx={{ mt: 0.5 }} />
-              </Button>
-            </Box>
             <Hidden mdUp>
-              <Box>
+              <Box pr={3}>
                 <Link
                   component="button"
                   underline="hover"
-                  onClick={(event) => handleHomeClick(event, Screen.ABOUT)}
+                  onClick={(event) => handleClick(event, Screen.HOME)}
+                  disabled={isHomeScreen}
+                >
+                  <Typography variant="body2">lyricly</Typography>
+                </Link>
+              </Box>
+              <Box pr={1}>
+                <Link
+                  component="button"
+                  underline="hover"
+                  onClick={(event) => handleClick(event, Screen.ABOUT)}
                   disabled={isAboutScreen}
                 >
                   <Typography variant="body2">about</Typography>
                 </Link>
               </Box>
             </Hidden>
+            <Box minWidth="64px">
+              {isHomeScreen && (
+                <Button
+                  variant="contained"
+                  onClick={() => setIsHelpDialogOpen(true)}
+                  sx={{ borderRadius: '50%', p: 1.5, transform: 'scale(0.5)' }}
+                >
+                  <QuestionMarkIcon fontSize="large" sx={{ mt: 0.5 }} />
+                </Button>
+              )}
+            </Box>
           </Box>
         </Box>
         <Divider />
