@@ -11,7 +11,7 @@ interface Props {
 
 export const HelpDialog = ({ isOpen, setIsOpen }: Props) => {
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
       <DialogContent>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2 }}>
           <Typography variant="h5" sx={{ pl: 6 }}>
