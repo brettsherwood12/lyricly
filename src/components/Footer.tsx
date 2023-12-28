@@ -56,7 +56,7 @@ export const Footer = () => {
         <Box>
           <Typography variant="body2">
             &copy; {year}{' '}
-            <Link href="https://github.com/clockmakerbrett" target="blank" underline="hover">
+            <Link href="https://github.com/brett-generac" target="blank" underline="hover">
               Brett Sherwood
             </Link>{' '}
           </Typography>
