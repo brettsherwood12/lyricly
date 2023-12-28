@@ -27,7 +27,7 @@ export const LoadDialog = ({ isOpen, setIsOpen, handleLoad }: Props) => {
           <strong>permanently</strong> discard any changes you have made in the text editor.
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ m: '0 auto 16px 16px' }}>
         <Button variant="contained" color="warning" onClick={() => setIsOpen(false)}>
           Cancel
         </Button>

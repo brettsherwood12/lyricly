@@ -27,7 +27,7 @@ export const DeleteDialog = ({ isOpen, setIsOpen, handleDelete }: Props) => {
           editor.
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ m: '0 auto 16px 16px' }}>
         <Button variant="contained" color="warning" onClick={() => setIsOpen(false)}>
           Cancel
         </Button>
