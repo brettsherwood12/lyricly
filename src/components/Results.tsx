@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Tabs, Tab } from '@mui/material';
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { isEmpty } from 'lodash';
 import type { SyntheticEvent } from 'react';
 
@@ -53,7 +53,7 @@ export const Results = () => {
 
   return (
     <Box>
-      <Box>
+      <Box height="45px">
         {hasSelectedLyric ? (
           <Typography variant="h6">'{selectedLyric}'</Typography>
         ) : (
@@ -62,6 +62,7 @@ export const Results = () => {
           </Typography>
         )}
       </Box>
+      <Divider />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Rhymes" />

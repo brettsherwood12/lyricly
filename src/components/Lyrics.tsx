@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Box, Button } from '@mui/material';
-import { createEditor, Transforms } from 'slate';
+import { Box, Button, Divider } from '@mui/material';
+import { createEditor, Editor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
@@ -30,7 +30,7 @@ const EDITOR_PLACEHOLDER = 'Type or paste lyrics here...';
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
-    children: [{ text: '\x00' }],
+    children: [{ text: '' }],
     customType: CustomType.INIT,
   },
 ];
@@ -168,16 +168,19 @@ export const Lyrics = () => {
     setSavedDateTime(now);
   };
 
-  const getSavedLyricsAndSetToState = () => {
+  const getSavedLyrics = () => {
     const json = localStorage.getItem('songs');
 
     if (json) {
       const song = JSON.parse(json)[0];
       const { saveDateTime, saveEditorValue } = song;
 
-      Transforms.removeNodes(editor, {
-        match: (node: any) => (node.customType === CustomType.INIT ? true : false),
-      });
+      Transforms.delete(editor, {
+        at: {
+          anchor: Editor.start(editor, []),
+          focus: Editor.end(editor, []),
+        },
+      }); // clear out editor
 
       Transforms.insertNodes(editor, saveEditorValue);
 
@@ -193,18 +196,18 @@ export const Lyrics = () => {
   };
 
   const handleLoad = () => {
-    getSavedLyricsAndSetToState();
+    getSavedLyrics();
     setIsLoadDialogOpen(false);
   };
 
   useEffect(() => {
-    getSavedLyricsAndSetToState();
+    getSavedLyrics();
   }, []);
 
   return (
     <>
       <Box sx={{ height: '100%' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '60px', pb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', pb: 2 }}>
           <Box pr={2}>
             <Button
               variant="contained"
@@ -223,16 +226,19 @@ export const Lyrics = () => {
             />
           )}
         </Box>
-        <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
-          <Editable
-            placeholder={EDITOR_PLACEHOLDER}
-            renderElement={renderElement}
-            onKeyDown={handleKeyDown}
-            onPaste={handlePaste}
-            style={editorStyle}
-            spellCheck={false}
-          />
-        </Slate>
+        <Divider />
+        <Box pt={1}>
+          <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
+            <Editable
+              placeholder={EDITOR_PLACEHOLDER}
+              renderElement={renderElement}
+              onKeyDown={handleKeyDown}
+              onPaste={handlePaste}
+              style={editorStyle}
+              spellCheck={false}
+            />
+          </Slate>
+        </Box>
       </Box>
       <DeleteDialog
         isOpen={isDeleteDialogOpen}
