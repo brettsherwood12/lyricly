@@ -49,6 +49,19 @@ export const Lyrics = () => {
   const [savedDateTime, setSavedDateTime] = useState<number | null>(null);
   const [dialogAction, setDialogAction] = useState<Action | null>(null);
 
+  const isEditorEmpty = useMemo(() => {
+    for (let node of editorValue) {
+      // @ts-ignore
+      const children = node.children;
+      for (let child of children) {
+        if (!!child.text) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }, [editorValue]);
+
   const renderElement = useCallback((props: RenderElementProps) => {
     const { children, element } = props;
 
@@ -220,6 +233,7 @@ export const Lyrics = () => {
               variant="contained"
               size="small"
               onClick={() => setDialogAction('save')}
+              disabled={isEditorEmpty}
               sx={{ fontSize: '12px' }}
             >
               Save

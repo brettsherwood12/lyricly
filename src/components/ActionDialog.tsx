@@ -7,6 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
+import { useWindowWidth } from '@react-hook/window-size/throttled';
 
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -19,11 +20,17 @@ interface Props {
 }
 
 export const ActionDialog = ({ action, setAction, handleAction }: Props) => {
+  const windowWidth = useWindowWidth();
+
   const titlePrefix = !!action ? action?.charAt(0).toUpperCase() + action?.slice(1) : '';
   const title = action !== 'save' ? `${titlePrefix} Saved Lyrics` : `${titlePrefix} Lyrics`;
 
   return (
-    <Dialog open={!!action} sx={{ minWidth: '320px', mr: { xs: 0, sm: '50%' } }}>
+    <Dialog
+      open={!!action}
+      fullScreen={windowWidth < 600 ? true : false}
+      sx={{ minWidth: '320px', mr: { sm: 0, md: '50%' }, mb: { xs: 0, sm: '40%', md: '25%' } }}
+    >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         {action === 'save' ? (
