@@ -182,6 +182,9 @@ export const Lyrics = () => {
 
       Transforms.insertNodes(editor, saveEditorValue);
 
+      // for some reason the init node persists even after editor is cleared, delete it
+      Transforms.delete(editor, { at: Editor.start(editor, [0, 0]) });
+
       setSavedDateTime(saveDateTime);
     }
   };
