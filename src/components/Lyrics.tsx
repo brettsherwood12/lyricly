@@ -5,14 +5,14 @@ import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
 import { SavePopover } from './SavePopover';
-import { DeleteDialog } from './DeleteDialog';
-import { LoadDialog } from './LoadDialog';
+import { ActionDialog } from './ActionDialog';
 
 import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
 
 import type { ClipboardEvent, KeyboardEvent } from 'react';
 import type { BaseEditor, Descendant } from 'slate';
 import type { ReactEditor, RenderElementProps } from 'slate-react';
+import type { Action } from './ActionDialog';
 
 type CustomText = { text: string; customType?: CustomType };
 type CustomElement = { type: string; children: CustomText[] };
@@ -47,8 +47,7 @@ export const Lyrics = () => {
 
   const [editorValue, setEditorValue] = useState(initialValue);
   const [savedDateTime, setSavedDateTime] = useState<number | null>(null);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
-  const [isLoadDialogOpen, setIsLoadDialogOpen] = useState<boolean>(false);
+  const [dialogAction, setDialogAction] = useState<Action | null>(null);
 
   const renderElement = useCallback((props: RenderElementProps) => {
     const { children, element } = props;
@@ -154,7 +153,7 @@ export const Lyrics = () => {
     Transforms.insertNodes(editor, nodes);
   };
 
-  const handleSaveButtonClick = () => {
+  const handleSave = () => {
     const now = Date.now();
     // use array so that multiple songs can be saved in future
     const songs = [
@@ -192,13 +191,25 @@ export const Lyrics = () => {
     localStorage.clear();
 
     setSavedDateTime(null);
-    setIsDeleteDialogOpen(false);
+    setDialogAction('delete');
   };
 
   const handleLoad = () => {
     getSavedLyrics();
-    setIsLoadDialogOpen(false);
+    setDialogAction('load');
   };
+
+  const handleAction = useCallback(() => {
+    if (dialogAction === 'load') {
+      handleLoad();
+    } else if (dialogAction === 'delete') {
+      handleDelete();
+    } else {
+      handleSave();
+    }
+
+    setDialogAction(null);
+  }, [dialogAction]);
 
   useEffect(() => {
     getSavedLyrics();
@@ -212,18 +223,14 @@ export const Lyrics = () => {
             <Button
               variant="contained"
               size="small"
-              onClick={handleSaveButtonClick}
+              onClick={() => setDialogAction('save')}
               sx={{ fontSize: '12px' }}
             >
               Save
             </Button>
           </Box>
           {!!savedDateTime && (
-            <SavePopover
-              savedDateTime={savedDateTime}
-              setIsLoadDialogOpen={setIsLoadDialogOpen}
-              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-            />
+            <SavePopover savedDateTime={savedDateTime} setDialogAction={setDialogAction} />
           )}
         </Box>
         <Divider />
@@ -240,16 +247,7 @@ export const Lyrics = () => {
           </Slate>
         </Box>
       </Box>
-      <DeleteDialog
-        isOpen={isDeleteDialogOpen}
-        setIsOpen={setIsDeleteDialogOpen}
-        handleDelete={handleDelete}
-      />
-      <LoadDialog
-        isOpen={isLoadDialogOpen}
-        setIsOpen={setIsLoadDialogOpen}
-        handleLoad={handleLoad}
-      />
+      <ActionDialog action={dialogAction} setAction={setDialogAction} handleAction={handleAction} />
     </>
   );
 };

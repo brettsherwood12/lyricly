@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
 import type { Dispatch, PointerEvent, SetStateAction } from 'react';
+import type { Action } from './ActionDialog';
 
 const localeStringOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -15,12 +16,11 @@ const localeStringOptions: Intl.DateTimeFormatOptions = {
 
 interface Props {
   savedDateTime: number;
-  setIsLoadDialogOpen: Dispatch<SetStateAction<boolean>>;
-  setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
+  setDialogAction: Dispatch<SetStateAction<Action>>;
 }
 
 export const SavePopover = (props: Props) => {
-  const { savedDateTime, setIsLoadDialogOpen, setIsDeleteDialogOpen } = props;
+  const { savedDateTime, setDialogAction } = props;
   const savedDateTimeString = new Date(savedDateTime).toLocaleString([], localeStringOptions);
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -30,12 +30,12 @@ export const SavePopover = (props: Props) => {
   };
 
   const handleLoadClick = () => {
-    setIsLoadDialogOpen(true);
+    setDialogAction('load');
     setAnchorEl(null);
   };
 
   const handleDeleteClick = () => {
-    setIsDeleteDialogOpen(true);
+    setDialogAction('delete');
     setAnchorEl(null);
   };
 
