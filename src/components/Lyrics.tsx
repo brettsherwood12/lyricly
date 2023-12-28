@@ -153,20 +153,6 @@ export const Lyrics = () => {
     Transforms.insertNodes(editor, nodes);
   };
 
-  const handleSave = () => {
-    const now = Date.now();
-    // use array so that multiple songs can be saved in future
-    const songs = [
-      {
-        saveDateTime: now,
-        saveEditorValue: editorValue,
-      },
-    ];
-
-    localStorage.setItem('songs', JSON.stringify(songs));
-    setSavedDateTime(now);
-  };
-
   const getSavedLyrics = () => {
     const json = localStorage.getItem('songs');
 
@@ -187,29 +173,39 @@ export const Lyrics = () => {
     }
   };
 
+  const handleSave = () => {
+    const now = Date.now();
+    const songs = [
+      {
+        saveDateTime: now,
+        saveEditorValue: editorValue,
+      },
+    ]; // use array so that multiple songs can be saved in future
+
+    localStorage.setItem('songs', JSON.stringify(songs));
+    setSavedDateTime(now);
+  };
+
   const handleDelete = () => {
     localStorage.clear();
 
     setSavedDateTime(null);
-    setDialogAction('delete');
   };
 
   const handleLoad = () => {
     getSavedLyrics();
-    setDialogAction('load');
   };
 
-  const handleAction = useCallback(() => {
-    if (dialogAction === 'load') {
+  const handleAction = () => {
+    if (dialogAction === 'save') {
+      handleSave();
+    } else if (dialogAction === 'load') {
       handleLoad();
     } else if (dialogAction === 'delete') {
       handleDelete();
-    } else {
-      handleSave();
     }
-
     setDialogAction(null);
-  }, [dialogAction]);
+  };
 
   useEffect(() => {
     getSavedLyrics();

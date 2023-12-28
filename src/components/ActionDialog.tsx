@@ -23,14 +23,20 @@ export const ActionDialog = ({ action, setAction, handleAction }: Props) => {
   const title = action !== 'save' ? `${titlePrefix} Saved Lyrics` : `${titlePrefix} Lyrics`;
 
   return (
-    <Dialog open={!!action}>
+    <Dialog open={!!action} sx={{ minWidth: '320px', mr: { xs: 0, sm: '50%' } }}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         {action === 'save' ? (
-          <DialogContentText>
-            Are you sure you want to save the lyrics in the text editor? This action will{' '}
-            <strong>permanently</strong> discard any previously saved lyrics.
-          </DialogContentText>
+          <>
+            <DialogContentText gutterBottom>
+              Are you sure you want to save the lyrics in the text editor? This action will{' '}
+              <strong>permanently</strong> discard any previously saved lyrics.
+            </DialogContentText>
+            <DialogContentText sx={{ fontStyle: 'italic' }}>
+              Note: Your lyrics are only saved to your web browser, they will not persist if you
+              visit lyricly from another browser, device, or in incognito mode.
+            </DialogContentText>
+          </>
         ) : action === 'load' ? (
           <DialogContentText>
             Are you sure you want to load your saved lyrics? This action will{' '}
@@ -44,7 +50,7 @@ export const ActionDialog = ({ action, setAction, handleAction }: Props) => {
         )}
       </DialogContent>
       <DialogActions sx={{ m: '0 auto 16px 16px' }}>
-        <Button variant="contained" onClick={() => handleAction()} autoFocus>
+        <Button variant="contained" onClick={handleAction} autoFocus>
           {action}
         </Button>
         <Button variant="contained" color="warning" onClick={() => setAction(null)}>
