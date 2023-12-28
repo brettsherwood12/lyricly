@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Divider, Hidden } from '@mui/material';
 
-import { Lyrics } from '../components/Lyrics';
 import { Results } from '../components/Results';
+import { Lyrics } from '../components/Lyrics';
 
 export const Home = () => {
   return (

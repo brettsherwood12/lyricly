@@ -1,9 +1,12 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { Box } from '@mui/material';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { Box, Button } from '@mui/material';
 import { createEditor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import { LyricSpan } from './LyricSpan';
+import { SavePopover } from './SavePopover';
+import { DeleteDialog } from './DeleteDialog';
+import { LoadDialog } from './LoadDialog';
 
 import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
 
@@ -27,7 +30,7 @@ const EDITOR_PLACEHOLDER = 'Type or paste lyrics here...';
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
-    children: [{ text: '' }],
+    children: [{ text: '\x00' }],
     customType: CustomType.INIT,
   },
 ];
@@ -43,6 +46,9 @@ export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [editorValue, setEditorValue] = useState(initialValue);
+  const [savedDateTime, setSavedDateTime] = useState<number | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
+  const [isLoadDialogOpen, setIsLoadDialogOpen] = useState<boolean>(false);
 
   const renderElement = useCallback((props: RenderElementProps) => {
     const { children, element } = props;
@@ -148,18 +154,96 @@ export const Lyrics = () => {
     Transforms.insertNodes(editor, nodes);
   };
 
+  const handleSaveButtonClick = () => {
+    const now = Date.now();
+    // use array so that multiple songs can be saved in future
+    const songs = [
+      {
+        saveDateTime: now,
+        saveEditorValue: editorValue,
+      },
+    ];
+
+    localStorage.setItem('songs', JSON.stringify(songs));
+    setSavedDateTime(now);
+  };
+
+  const getSavedLyricsAndSetToState = () => {
+    const json = localStorage.getItem('songs');
+
+    if (json) {
+      const song = JSON.parse(json)[0];
+      const { saveDateTime, saveEditorValue } = song;
+
+      Transforms.removeNodes(editor, {
+        match: (node: any) => (node.customType === CustomType.INIT ? true : false),
+      });
+
+      Transforms.insertNodes(editor, saveEditorValue);
+
+      setSavedDateTime(saveDateTime);
+    }
+  };
+
+  const handleDelete = () => {
+    localStorage.clear();
+
+    setSavedDateTime(null);
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleLoad = () => {
+    getSavedLyricsAndSetToState();
+    setIsLoadDialogOpen(false);
+  };
+
+  useEffect(() => {
+    getSavedLyricsAndSetToState();
+  }, []);
+
   return (
-    <Box>
-      <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
-        <Editable
-          placeholder={EDITOR_PLACEHOLDER}
-          renderElement={renderElement}
-          onKeyDown={handleKeyDown}
-          onPaste={handlePaste}
-          style={editorStyle}
-          spellCheck={false}
-        />
-      </Slate>
-    </Box>
+    <>
+      <Box sx={{ height: '100%' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '60px', pb: 2 }}>
+          <Box pr={2}>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={handleSaveButtonClick}
+              sx={{ fontSize: '12px' }}
+            >
+              Save
+            </Button>
+          </Box>
+          {!!savedDateTime && (
+            <SavePopover
+              savedDateTime={savedDateTime}
+              setIsLoadDialogOpen={setIsLoadDialogOpen}
+              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+            />
+          )}
+        </Box>
+        <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
+          <Editable
+            placeholder={EDITOR_PLACEHOLDER}
+            renderElement={renderElement}
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
+            style={editorStyle}
+            spellCheck={false}
+          />
+        </Slate>
+      </Box>
+      <DeleteDialog
+        isOpen={isDeleteDialogOpen}
+        setIsOpen={setIsDeleteDialogOpen}
+        handleDelete={handleDelete}
+      />
+      <LoadDialog
+        isOpen={isLoadDialogOpen}
+        setIsOpen={setIsLoadDialogOpen}
+        handleLoad={handleLoad}
+      />
+    </>
   );
 };
