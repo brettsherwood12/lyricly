@@ -36,10 +36,11 @@ const initialValue: Descendant[] = [
 ];
 
 const paddingHeight = 32;
-const heightDiff = headerHeight + footerHeight + paddingHeight;
-const editorStyle = {
-  height: '100%',
-  maxHeight: `calc(100vh - ${heightDiff}px)`,
+const saveHeight = 48;
+const heightDiff = headerHeight + footerHeight + paddingHeight + saveHeight;
+const containerStyle = {
+  height: `calc(100vh - ${heightDiff + 48}px)`,
+  pt: 1,
 };
 
 export const Lyrics = () => {
@@ -247,15 +248,15 @@ export const Lyrics = () => {
           )}
         </Box>
         <Divider />
-        <Box pt={1}>
+        <Box sx={containerStyle}>
           <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
             <Editable
               placeholder={EDITOR_PLACEHOLDER}
               renderElement={renderElement}
               onKeyDown={handleKeyDown}
               onPaste={handlePaste}
-              style={editorStyle}
               spellCheck={false}
+              style={{ height: '100%' }}
             />
           </Slate>
         </Box>
