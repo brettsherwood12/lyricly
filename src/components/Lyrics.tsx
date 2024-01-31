@@ -7,7 +7,7 @@ import { LyricSpan } from './LyricSpan';
 import { SavePopover } from './SavePopover';
 import { ActionDialog } from './ActionDialog';
 
-import { CustomType, footerHeight, headerHeight, Key } from '../Constants';
+import { CustomType, Key } from '../Constants';
 
 import type { ClipboardEvent, KeyboardEvent } from 'react';
 import type { BaseEditor, Descendant } from 'slate';
@@ -34,14 +34,6 @@ const initialValue: Descendant[] = [
     customType: CustomType.INIT,
   },
 ];
-
-const paddingHeight = 32;
-const saveHeight = 48;
-const heightDiff = headerHeight + footerHeight + paddingHeight + saveHeight;
-const containerStyle = {
-  height: `calc(100vh - ${heightDiff + 48}px)`,
-  pt: 1,
-};
 
 export const Lyrics = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -230,37 +222,35 @@ export const Lyrics = () => {
 
   return (
     <>
-      <Box sx={{ height: '100%' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', pb: 2 }}>
-          <Box pr={2}>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={() => setDialogAction('save')}
-              disabled={isEditorEmpty}
-              sx={{ fontSize: '12px' }}
-            >
-              Save
-            </Button>
-          </Box>
-          {!!savedDateTime && (
-            <SavePopover savedDateTime={savedDateTime} setDialogAction={setDialogAction} />
-          )}
+      <Box sx={{ display: 'flex', alignItems: 'center', pb: 2 }}>
+        <Box pr={2}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setDialogAction('save')}
+            disabled={isEditorEmpty}
+            sx={{ fontSize: '12px' }}
+          >
+            Save
+          </Button>
         </Box>
-        <Divider />
-        <Box sx={containerStyle}>
-          <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
-            <Editable
-              placeholder={EDITOR_PLACEHOLDER}
-              renderElement={renderElement}
-              onKeyDown={handleKeyDown}
-              onPaste={handlePaste}
-              autoFocus
-              spellCheck={false}
-              style={{ height: '100%' }}
-            />
-          </Slate>
-        </Box>
+        {!!savedDateTime && (
+          <SavePopover savedDateTime={savedDateTime} setDialogAction={setDialogAction} />
+        )}
+      </Box>
+      <Divider />
+      <Box sx={{ height: 'calc(100% - 36px)', pt: 1, overflow: 'auto' }}>
+        <Slate editor={editor} value={editorValue} onChange={(value) => setEditorValue(value)}>
+          <Editable
+            placeholder={EDITOR_PLACEHOLDER}
+            renderElement={renderElement}
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
+            autoFocus
+            spellCheck={false}
+            style={{ height: '100%' }}
+          />
+        </Slate>
       </Box>
       <ActionDialog action={dialogAction} setAction={setDialogAction} handleAction={handleAction} />
     </>

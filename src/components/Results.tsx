@@ -52,7 +52,7 @@ export const Results = () => {
   };
 
   return (
-    <Box>
+    <>
       <Box height="45px">
         {hasSelectedLyric ? (
           <Typography variant="h6">'{selectedLyric}'</Typography>
@@ -63,14 +63,14 @@ export const Results = () => {
         )}
       </Box>
       <Divider />
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '150px' }}>
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Rhymes" />
           <Tab label="Synonyms" />
           <Tab label="Related Words" />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <Box sx={{ fontSize: { xs: '12px', sm: '12px', md: '16px' } }}>
+          <Box sx={{ fontSize: { xs: '12px', md: '16px' } }}>
             {hasNoRhymes ? (
               <NoDataMessage type={DataType.RHYMES} lyric={selectedLyric} />
             ) : (
@@ -82,7 +82,7 @@ export const Results = () => {
           </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Box sx={{ fontSize: { xs: '12px', sm: '12px', md: '16px' } }}>
+          <Box sx={{ fontSize: { xs: '12px', md: '16px' } }}>
             {hasNoSynonyms ? (
               <NoDataMessage type={DataType.SYNONYMS} lyric={selectedLyric} />
             ) : (
@@ -94,7 +94,7 @@ export const Results = () => {
           </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Box sx={{ fontSize: { xs: '12px', sm: '12px', md: '16px' } }}>
+          <Box sx={{ fontSize: { xs: '12px', md: '16px' } }}>
             {hasNoRelatedWords ? (
               <NoDataMessage type={DataType.RELATED_WORDS} lyric={selectedLyric} />
             ) : (
@@ -108,6 +108,6 @@ export const Results = () => {
           </Box>
         </TabPanel>
       </Box>
-    </Box>
+    </>
   );
 };

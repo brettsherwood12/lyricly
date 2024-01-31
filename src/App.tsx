@@ -57,14 +57,14 @@ function App() {
       <Context.Provider value={contextValue}>
         <Box
           sx={{
-            height: '100vh',
+            height: { md: '100vh' },
             minWidth: '320px',
             display: 'flex',
             flexDirection: 'column',
           }}
         >
           <Header />
-          <Box sx={{ height: '100%', px: { xs: '12px', sm: '12px', md: '24px' } }}>
+          <Box sx={{ height: { md: '100%' }, px: { xs: '12px', sm: '12px', md: '24px' } }}>
             {(isAboutScreen && <About />) || <Home />}
           </Box>
           <Hidden mdDown>
