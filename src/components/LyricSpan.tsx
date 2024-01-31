@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { makeStyles, createStyles } from '@mui/styles';
+import { usePress } from 'react-aria';
 
 import { Context } from '../App';
 import { fetchResults } from '../Utils';
@@ -25,26 +26,26 @@ export const LyricSpan = ({ child }: any) => {
 
   const { selectedLyric, setSelectedLyric, setRhymes, setSynonyms, setRelatedWords } =
     useContext(Context);
-
-  const classes = useStyles();
-
   const isSelected = selectedLyric === lyric; // is true for instances of word that were not clicked on
 
+  const classes = useStyles();
   const className = isSelected ? `${classes.span} ${classes.selected}` : classes.span;
 
-  const handleClick = async () => {
-    if (lyric.length <= 45) {
-      const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
+  const { pressProps } = usePress({
+    onPressStart: async () => {
+      if (lyric.length <= 45) {
+        const { rhymes, synonyms, relatedWords } = await fetchResults(lyric);
 
-      setSelectedLyric(lyric);
-      setRhymes(rhymes);
-      setSynonyms(synonyms);
-      setRelatedWords(relatedWords);
-    }
-  };
+        setSelectedLyric(lyric);
+        setRhymes(rhymes);
+        setSynonyms(synonyms);
+        setRelatedWords(relatedWords);
+      }
+    },
+  });
 
   return (
-    <span data-custom-type="lyric" onClick={handleClick} className={className}>
+    <span {...pressProps} data-custom-type="lyric" className={className}>
       {child}
     </span>
   );
