@@ -25,7 +25,7 @@ export const ResultSpan = ({ result, isLast }: Props) => {
   };
 
   return (
-    <Typography component="span" sx={{ cursor: 'pointer' }} onClick={handleClick}>
+    <Typography color="primary" component="span" sx={{ cursor: 'pointer' }} onClick={handleClick}>
       {lyric + punctuation}
     </Typography>
   );

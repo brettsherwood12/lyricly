@@ -255,6 +255,7 @@ export const Lyrics = () => {
               renderElement={renderElement}
               onKeyDown={handleKeyDown}
               onPaste={handlePaste}
+              autoFocus
               spellCheck={false}
               style={{ height: '100%' }}
             />
